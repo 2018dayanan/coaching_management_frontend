@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Video, Calendar, Clock, Plus, Search, Filter, MonitorPlay } from "lucide-react";
+import { Video, Plus, Search, Filter, MonitorPlay } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllClasses } from "@/api/educationClassApi";
 import { DataTable } from "@/components/DataTable";

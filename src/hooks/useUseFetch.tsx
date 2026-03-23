@@ -1,4 +1,4 @@
-import { getAllUsers } from "@/api/userApi";
+import { getAllEducationUsers as getAllUsers } from "@/api/educationUserApi";
 import { useAuth } from "@/providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 
