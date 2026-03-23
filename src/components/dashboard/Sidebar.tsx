@@ -27,9 +27,9 @@ import { useAuth } from "@/providers/AuthProvider";
 
 const menuItems = [
   { title: "Dashboard", adminUrl: "/admin", teacherUrl: "/teacher/dashboard", icon: LayoutDashboard, accent: "blue", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
-  { title: "Student Management", adminUrl: "/admin/users", teacherUrl: "/teacher/dashboard/users", icon: Users, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
+  { title: "Student Management", adminUrl: "/admin/users", teacherUrl: "/teacher/dashboard/students", icon: Users, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
   { title: "Teacher Management", adminUrl: "/admin/teachers", icon: Users, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN"] },
-  { title: "Batch Management", adminUrl: "/admin/batches", icon: BookOpen, accent: "emerald", roles: ["ADMIN", "SUPER_ADMIN"] },
+  { title: "Batch Management", adminUrl: "/admin/batches", teacherUrl: "/teacher/dashboard/batches", icon: BookOpen, accent: "emerald", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
   { title: "Class Management", adminUrl: "/admin/classes", teacherUrl: "/teacher/dashboard/classes", icon: Video, accent: "blue", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
   { title: "Task Management", adminUrl: "/admin/tasks", teacherUrl: "/teacher/dashboard/tasks", icon: ListChecks, accent: "indigo", roles: ["TEACHER"] },
   { title: "Security", adminUrl: "/admin/security", icon: Shield, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN"] },

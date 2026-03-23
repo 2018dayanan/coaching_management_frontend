@@ -97,6 +97,25 @@ export type CreateTaskBody = {
   attachment_url?: string;
 };
 
+export type TeacherBatch = {
+  _id: string;
+  name: string;
+  subject: string;
+  description: string;
+  teacher_id: string;
+  start_date: string;
+  end_date: string;
+  status: string;
+  enrolled_students: {
+    _id: string;
+    name: string;
+    unique_id: string;
+    profile_picture?: string;
+  }[];
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type Task = {
   _id: string;
   title: string;
@@ -184,4 +203,10 @@ export const updateTeacherTask = async (id: string, body: Partial<CreateTaskBody
 export const deleteTeacherTask = async (id: string): Promise<any> => {
   const { data } = await api.delete(`${BASE_PATH}/tasks/${id}`);
   return data;
+};
+
+// 🏛️ Batch Management
+export const getMyBatches = async (): Promise<TeacherBatch[]> => {
+  const { data } = await api.get(`${BASE_PATH}/batches`);
+  return data.data;
 };

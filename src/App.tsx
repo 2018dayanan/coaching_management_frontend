@@ -25,6 +25,7 @@ import Teachers from "./pages/admin/Teachers";
 import TeacherStudentList from "./pages/teacher/students/StudentList";
 import TeacherStudentDetail from "./pages/teacher/students/StudentDetail";
 import TaskManagement from "./pages/teacher/tasks/TaskManagement";
+import TeacherBatchList from "./pages/teacher/batches/BatchList";
 
 const queryClient = new QueryClient();
 
@@ -78,6 +79,7 @@ const App = () => (
                 <Route path="users" element={<TeacherStudentList />} />
                 <Route path="students" element={<TeacherStudentList />} />
                 <Route path="students/:id" element={<TeacherStudentDetail />} />
+                <Route path="batches" element={<TeacherBatchList />} />
                 <Route path="tasks" element={<TaskManagement />} />
                 <Route path="classes" element={<Classes />} />
                 <Route path="classes/:id" element={<ClassDetail />} />
