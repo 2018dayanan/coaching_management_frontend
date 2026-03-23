@@ -160,15 +160,37 @@ export type TeacherDashboardData = {
   recentTasks: any[];
 };
 
+export type TeacherClass = {
+  _id: string;
+  title: string;
+  subject: string;
+  batch_id: string | { _id: string; name: string; subject: string };
+  class_date: string;
+  class_time: string;
+  meeting_link: string;
+  teacher_id: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CreateClassBody = {
+  title: string;
+  subject: string;
+  batch_id: string;
+  class_date: string;
+  class_time: string;
+  meeting_link: string;
+};
+
 // --- API Functions ---
 
-// 📊 Dashboard Stats
+//  Dashboard Stats
 export const getTeacherDashboardStats = async (): Promise<TeacherDashboardData> => {
   const { data } = await api.get(`${BASE_PATH}/dashboard`);
   return data.data;
 };
 
-// 🤝 Enrollment Management
+//  Enrollment Management
 
 export const enrollStudentsInBatch = async (body: EnrollStudentsBody): Promise<EnrollmentResponse> => {
   const { data } = await api.post(`${BASE_PATH}/enroll/students`, body);
@@ -180,7 +202,7 @@ export const getStudentsByBatch = async (batchId: string): Promise<BatchStudent[
   return data.data;
 };
 
-// 🧑🎓 Student Management
+// Student Management
 
 export const getMyStudents = async (): Promise<MyStudent[]> => {
   const { data } = await api.get(`${BASE_PATH}/students`);
@@ -202,7 +224,7 @@ export const reviewSubmission = async (submissionId: string, body: ReviewBody): 
   return data;
 };
 
-// 📝 Task & Assignment Management
+//  Task & Assignment Management
 
 export const createTeacherTask = async (body: CreateTaskBody): Promise<any> => {
   const { data } = await api.post(`${BASE_PATH}/tasks`, body);
@@ -242,5 +264,33 @@ export const getBatchById = async (id: string): Promise<TeacherBatch> => {
 
 export const updateTeacherBatch = async (id: string, body: UpdateBatchBody): Promise<any> => {
   const { data } = await api.patch(`${BASE_PATH}/batches/${id}`, body);
+  return data;
+};
+
+//Class Management
+
+export const getTeacherClasses = async (batchId?: string): Promise<TeacherClass[]> => {
+  const params = batchId ? { batch_id: batchId } : {};
+  const { data } = await api.get(`${BASE_PATH}/classes`, { params });
+  return data.data;
+};
+
+export const getTeacherClassById = async (id: string): Promise<TeacherClass> => {
+  const { data } = await api.get(`${BASE_PATH}/classes/${id}`);
+  return data.data;
+};
+
+export const createTeacherClass = async (body: CreateClassBody): Promise<any> => {
+  const { data } = await api.post(`${BASE_PATH}/classes`, body);
+  return data;
+};
+
+export const updateTeacherClass = async (id: string, body: Partial<CreateClassBody>): Promise<any> => {
+  const { data } = await api.patch(`${BASE_PATH}/classes/${id}`, body);
+  return data;
+};
+
+export const deleteTeacherClass = async (id: string): Promise<any> => {
+  const { data } = await api.delete(`${BASE_PATH}/classes/${id}`);
   return data;
 };
