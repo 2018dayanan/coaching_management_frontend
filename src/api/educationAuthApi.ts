@@ -6,16 +6,21 @@ export type AdminLoginBody = {
   password: string;
 };
 
+export type LoggedUser = {
+  id: string;
+  name: string;
+  username: string;
+  email: string;
+  role: string;
+};
+
 export type AdminLoginResponse = {
   status: boolean;
   token: string;
-  admin: {
-    id: string;
-    name: string;
-    username: string;
-    email: string;
-    role: string;
-  };
+  admin?: LoggedUser;
+  teacher?: LoggedUser;
+  user?: LoggedUser;
+  message?: string;
 };
 
 export type AdminProfile = {
@@ -49,7 +54,7 @@ const loginEducationAdmin = async (
 const loginEducationTeacher = async (
   body: AdminLoginBody
 ): Promise<AdminLoginResponse> => {
-  const { data } = await api.post<AdminLoginResponse>("/teacher/auth/login", body, {
+  const { data } = await api.post<AdminLoginResponse>("/auth/login", body, {
     headers: { "Content-Type": "application/json" },
   });
   if (data.token) {

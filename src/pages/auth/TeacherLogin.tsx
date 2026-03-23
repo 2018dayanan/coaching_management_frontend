@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { GraduationCap, Lock, Mail, ArrowRight, UserCheck } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 import { useForm } from "react-hook-form";
@@ -25,7 +25,6 @@ import DotsLoader from "@/components/ui/dotsLoader";
 import { useAuth } from "@/providers/AuthProvider";
 
 const TeacherLogin = () => {
-  const navigate = useNavigate();
   const { login } = useAuth();
   const [isPending, setIsPending] = useState(false);
 
@@ -46,15 +45,20 @@ const TeacherLogin = () => {
       });
 
       if (response.status) {
-        login(response.token, response.admin);
-        toast.success("Welcome back, Teacher!");
-        navigate("/admin"); // Or teacher specific dashboard if exists
+        const userData = response.admin || response.teacher || response.user;
+        if (userData) {
+          login(response.token, userData);
+          toast.success("Welcome back, Teacher!");
+        } else {
+          toast.error("User data not found in response.");
+        }
       } else {
-        toast.error("Invalid credentials. Please try again.");
+        toast.error(response.message || "Invalid credentials. Please try again.");
       }
     } catch (error: any) {
       console.error("Login Error:", error);
-      toast.error(error.response?.data?.message || "Connection failed. Please check your credentials.");
+      const errorMessage = error.response?.data?.message || "Connection failed. Please check your credentials.";
+      toast.error(errorMessage);
     } finally {
       setIsPending(false);
     }
@@ -77,14 +81,14 @@ const TeacherLogin = () => {
       >
         <Card className="bg-black/40 backdrop-blur-3xl border-indigo-500/20 shadow-[0_0_50px_-12px_rgba(79,70,229,0.3)] overflow-hidden">
           <CardHeader className="text-center space-y-4 pt-10">
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ 
+              transition={{
                 type: "spring",
                 stiffness: 260,
                 damping: 20,
-                delay: 0.2 
+                delay: 0.2
               }}
               className="flex justify-center"
             >
@@ -92,7 +96,7 @@ const TeacherLogin = () => {
                 <GraduationCap className="h-12 w-12 text-indigo-400" />
               </div>
             </motion.div>
-            
+
             <div className="space-y-2">
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -111,7 +115,7 @@ const TeacherLogin = () => {
 
           <CardContent className="px-10 pb-12">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5 }}
@@ -132,7 +136,7 @@ const TeacherLogin = () => {
                 )}
               </motion.div>
 
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.6 }}
@@ -178,17 +182,17 @@ const TeacherLogin = () => {
                 </Button>
               </motion.div>
             </form>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.9 }}
               className="mt-10 flex flex-col items-center gap-4"
             >
               <div className="h-px w-full bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent" />
-              
-              <Link 
-                to="/admin/auth/login" 
+
+              <Link
+                to="/admin/auth/login"
                 className="text-xs text-indigo-300/40 hover:text-indigo-200 transition-colors font-bold uppercase tracking-[0.2em] flex items-center gap-2 group"
               >
                 <UserCheck className="h-3 w-3 group-hover:scale-110 transition-transform" />
@@ -200,8 +204,8 @@ const TeacherLogin = () => {
       </motion.div>
 
       {/* Modern Grid Background */}
-      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" 
-           style={{ backgroundImage: `radial-gradient(#4f46e5 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
+      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none"
+        style={{ backgroundImage: `radial-gradient(#4f46e5 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
     </div>
   );
 };

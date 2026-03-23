@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { type AdminLoginResponse } from "../api/educationAuthApi";
+import { type AdminLoginResponse, type LoggedUser } from "../api/educationAuthApi";
 import { useNavigate } from "react-router-dom";
 
-type Admin = AdminLoginResponse["admin"];
+type Admin = LoggedUser;
 
 type AuthContextType = {
   admin: Admin | null;
@@ -45,7 +45,13 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(newToken);
     setAdmin(adminData);
     qc.invalidateQueries({ queryKey: ["admin"] });
-    navigate("/admin", { replace: true });
+    
+    // Role-based navigation
+    if (adminData.role.toUpperCase() === "TEACHER") {
+      navigate("/teacher/dashboard", { replace: true });
+    } else {
+      navigate("/admin", { replace: true });
+    }
   };
 
   const logout = () => {
@@ -54,15 +60,22 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(null);
     setAdmin(null);
     qc.clear();
-    const isTeacher = window.location.pathname.startsWith("/teacher");
-    navigate(isTeacher ? "/teacher/auth/login" : "/admin/auth/login", { replace: true });
+    const isTeacherPortal = 
+      window.location.pathname === "/auth/login" || 
+      window.location.pathname === "/teacher/auth/login" || 
+      window.location.pathname.startsWith("/teacher");
+    navigate(isTeacherPortal ? "/auth/login" : "/admin/auth/login", { replace: true });
   };
 
   useEffect(() => {
-    // Redirect logic: if tokens are present and we're at a login page, go to admin
-    const loginPaths = ["/admin/auth/login", "/teacher/auth/login", "/auth/login"];
+    // Redirect logic: if tokens are present and we're at a login page, go to appropriate dashboard
+    const loginPaths = ["/admin/auth/login", "/auth/login", "/teacher/auth/login"];
     if (token && admin && loginPaths.includes(window.location.pathname)) {
-      navigate("/admin", { replace: true });
+      if (admin.role.toUpperCase() === "TEACHER") {
+        navigate("/teacher/dashboard", { replace: true });
+      } else {
+        navigate("/admin", { replace: true });
+      }
     }
   }, [token, admin, navigate]);
 

@@ -22,21 +22,28 @@ import {
 } from "lucide-react";
 
 import { NavLink, useLocation } from "react-router-dom";
+import { useAuth } from "@/providers/AuthProvider";
 
 const menuItems = [
-  { title: "Dashboard", url: "/admin", icon: LayoutDashboard, accent: "blue" },
-  { title: "Student Management", url: "/admin/users", icon: Users, accent: "indigo" },
-  { title: "Teacher Management", url: "/admin/teachers", icon: Users, accent: "indigo" },
-  { title: "Batch Management", url: "/admin/batches", icon: BookOpen, accent: "emerald" },
-  { title: "Class Management", url: "/admin/classes", icon: Video, accent: "blue" },
-  { title: "Security", url: "/admin/security", icon: Shield, accent: "indigo" },
-  { title: "Settings", url: "/admin/settings", icon: Settings, accent: "blue" },
-  { title: "Admin Profile", url: "/admin/profile", icon: UserCircle, accent: "indigo" },
+  { title: "Dashboard", adminUrl: "/admin", teacherUrl: "/teacher/dashboard", icon: LayoutDashboard, accent: "blue", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
+  { title: "Student Management", adminUrl: "/admin/users", teacherUrl: "/teacher/dashboard/users", icon: Users, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
+  { title: "Teacher Management", adminUrl: "/admin/teachers", icon: Users, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN"] },
+  { title: "Batch Management", adminUrl: "/admin/batches", icon: BookOpen, accent: "emerald", roles: ["ADMIN", "SUPER_ADMIN"] },
+  { title: "Class Management", adminUrl: "/admin/classes", teacherUrl: "/teacher/dashboard/classes", icon: Video, accent: "blue", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
+  { title: "Security", adminUrl: "/admin/security", icon: Shield, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN"] },
+  { title: "Settings", adminUrl: "/admin/settings", icon: Settings, accent: "blue", roles: ["ADMIN", "SUPER_ADMIN"] },
+  { title: "Profile", adminUrl: "/admin/profile", teacherUrl: "/teacher/dashboard/profile", icon: UserCircle, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
 ];
 
 export default function AppSidebar() {
   const { pathname } = useLocation();
   const { open, isMobile } = useSidebar();
+  const { admin } = useAuth();
+
+  const filteredItems = menuItems.filter(item => {
+    const userRole = admin?.role?.toUpperCase();
+    return item.roles.some(role => role.toUpperCase() === userRole);
+  });
 
   return (
     <Sidebar
@@ -56,10 +63,10 @@ export default function AppSidebar() {
           {(open || isMobile) && (
             <div className="flex flex-col">
               <h1 className="text-md font-bold text-foreground leading-tight">
-                Education <span className="text-primary">Admin</span>
+                Education <span className="text-primary">{admin?.role === "TEACHER" ? "Teacher" : "Admin"}</span>
               </h1>
               <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold opacity-60">
-                Management Portal
+                {admin?.role === "TEACHER" ? "Teacher Portal" : "Management Portal"}
               </p>
             </div>
           )}
@@ -71,17 +78,19 @@ export default function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1.5">
-              {menuItems.map((item) => {
+              {filteredItems.map((item) => {
+                const isTeacher = admin?.role?.toUpperCase() === "TEACHER";
+                const url = isTeacher ? (item.teacherUrl || item.adminUrl) : item.adminUrl;
                 const isActive =
-                  item.url === "/admin"
-                    ? pathname === item.url
-                    : pathname.startsWith(item.url);
+                  url === "/admin" || url === "/teacher/dashboard"
+                    ? pathname === url
+                    : pathname.startsWith(url);
 
                 return (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
                       <NavLink
-                        to={item.url}
+                        to={url}
                         className={cn(
                           "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-sm font-semibold group relative overflow-hidden",
                           isActive

@@ -8,13 +8,17 @@ const ProtectedRoute = ({ allowedRoles }: { allowedRoles: any[] }) => {
     return <FullscreenLoader/>;
   }
   if (!isAuthenticated) {
-    return <Navigate to={"/admin/auth/login"} replace />;
+    const isTeacherRoute = window.location.pathname.startsWith("/teacher") || window.location.pathname === "/auth/login";
+    return <Navigate to={isTeacherRoute ? "/auth/login" : "/admin/auth/login"} replace />;
   }
 
-  const isAllowedRole = !allowedRoles || allowedRoles.length === 0 || allowedRoles.includes(admin?.role);
+  const userRole = admin?.role?.toUpperCase();
+  const isAllowedRole = !allowedRoles || allowedRoles.length === 0 || 
+    allowedRoles.some(role => role.toUpperCase() === userRole);
   
   if (!isAllowedRole) {
-    return <Navigate to={"/admin/auth/login"} replace />;
+    // If authenticated but unauthorized, send to their own portal
+    return <Navigate to={userRole === "TEACHER" ? "/teacher/dashboard" : "/admin"} replace />;
   }
 
   return <Outlet />;

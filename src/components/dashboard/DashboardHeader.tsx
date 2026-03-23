@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Bell, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -67,9 +66,11 @@ export function DashboardHeader() {
             </Avatar>
 
             {/* Hide User Text on small screens */}
-            <div className="hidden lg:block">
-              <p className="text-sm font-medium text-foreground">{admin?.name || "Admin"}</p>
-              <p className="text-xs text-muted-foreground">{admin?.email}</p>
+            <div className="hidden lg:block text-right">
+              <p className="text-sm font-bold text-foreground leading-none">{admin?.name || "User"}</p>
+              <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter opacity-70">
+                {admin?.role?.replace("_", " ") || "Member"}
+              </p>
             </div>
           </div>
 

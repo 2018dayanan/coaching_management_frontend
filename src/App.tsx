@@ -13,6 +13,7 @@ import Settings from "./pages/admin/Settings";
 import ModelProvider from "./providers/ModelProvider";
 import SuperAdminLogin from "./pages/auth/login";
 import TeacherLogin from "./pages/auth/TeacherLogin";
+import TeacherDashboard from "./pages/teacher/Dashboard";
 import { DashboardLayout } from "./components/layouts/DashboardLayout";
 import { SidebarProvider } from "./components/ui/sidebar";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
@@ -34,9 +35,10 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/admin/auth/login" element={<SuperAdminLogin />} />
+            <Route path="/auth/login" element={<TeacherLogin />} />
             <Route path="/teacher/auth/login" element={<TeacherLogin />} />
-            <Route element={<ProtectedRoute allowedRoles={["admin", "SUPER_ADMIN"]} />}>
-              <Route path="/" element={<Navigate to={"/admin"} />} />
+            <Route path="/" element={<Navigate to="/admin" replace />} />
+            <Route element={<ProtectedRoute allowedRoles={["ADMIN", "SUPER_ADMIN"]} />}>
               <Route
                 path="/admin"
                 element={
@@ -54,6 +56,25 @@ const App = () => (
                 <Route path="classes/:id" element={<ClassDetail />} />
                 <Route path="security" element={<Security />} />
                 <Route path="settings" element={<Settings />} />
+                <Route path="profile" element={<AdminProfile />} />
+              </Route>
+            </Route>
+
+            {/* Teacher Routes */}
+            <Route element={<ProtectedRoute allowedRoles={["TEACHER"]} />}>
+              <Route path="/teacher" element={<Navigate to="/teacher/dashboard" replace />} />
+              <Route
+                path="/teacher/dashboard"
+                element={
+                  <SidebarProvider>
+                    <DashboardLayout />
+                  </SidebarProvider>
+                }
+              >
+                <Route index element={<TeacherDashboard />} />
+                <Route path="users" element={<Users />} />
+                <Route path="classes" element={<Classes />} />
+                <Route path="classes/:id" element={<ClassDetail />} />
                 <Route path="profile" element={<AdminProfile />} />
               </Route>
             </Route>

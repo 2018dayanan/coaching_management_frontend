@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { ShieldCheck, Lock, Mail, ArrowRight, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 import { useForm } from "react-hook-form";
@@ -25,7 +25,6 @@ import DotsLoader from "@/components/ui/dotsLoader";
 import { useAuth } from "@/providers/AuthProvider";
 
 const SuperAdminLogin = () => {
-  const navigate = useNavigate();
   const { login } = useAuth();
   const [isPending, setIsPending] = useState(false);
 
@@ -46,15 +45,20 @@ const SuperAdminLogin = () => {
       });
 
       if (response.status) {
-        login(response.token, response.admin);
-        toast.success("Welcome back, Admin!");
-        navigate("/admin");
+        const userData = response.admin || response.teacher || response.user;
+        if (userData) {
+          login(response.token, userData);
+          toast.success("Welcome back, Admin!");
+        } else {
+          toast.error("User data not found in response.");
+        }
       } else {
-        toast.error("Invalid credentials. Please try again.");
+        toast.error(response.message || "Invalid credentials. Please try again.");
       }
     } catch (error: any) {
       console.error("Login Error:", error);
-      toast.error(error.response?.data?.message || "Connection failed. Please check your credentials.");
+      const errorMessage = error.response?.data?.message || "Connection failed. Please check your credentials.";
+      toast.error(errorMessage);
     } finally {
       setIsPending(false);
     }
@@ -203,7 +207,7 @@ const SuperAdminLogin = () => {
             >
               <div className="h-px w-full bg-white/5" />
               <Link 
-                to="/teacher/auth/login" 
+                to="/auth/login" 
                 className="text-xs text-slate-400 hover:text-white transition-colors flex items-center gap-2 group font-medium"
               >
                 <ShieldCheck className="h-3 w-3 text-secondary" />
