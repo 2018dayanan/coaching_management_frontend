@@ -4,6 +4,9 @@ import { DeleteUserDialog } from "@/components/models/delete-user-modal";
 import { CreateBatchDialog } from "@/components/models/create-batch-modal";
 import { EditBatchDialog } from "@/components/models/edit-batch-modal";
 import { DeleteBatchDialog } from "@/components/models/delete-batch-modal";
+import { ScheduleClassDialog } from "@/components/models/schedule-class-modal";
+import { EditClassDialog } from "@/components/models/edit-class-modal";
+import { DeleteClassDialog } from "@/components/models/delete-class-modal";
 import { useState, useEffect } from "react";
 
 const ModelProvider = () => {
@@ -25,6 +28,9 @@ const ModelProvider = () => {
       <CreateBatchDialog />
       <EditBatchDialog />
       <DeleteBatchDialog />
+      <ScheduleClassDialog />
+      <EditClassDialog />
+      <DeleteClassDialog />
     </>
   );
 };

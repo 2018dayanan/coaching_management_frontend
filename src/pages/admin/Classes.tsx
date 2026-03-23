@@ -30,9 +30,12 @@ const Classes = () => {
       title: cls.title,
       subject: cls.subject,
       batch_name: cls.batch?.name || cls.batch_name || "N/A",
+      batch_id: cls.batch?._id || cls.batch_id || "",
       class_date: cls.class_date,
       class_time: cls.class_time,
       meeting_link: cls.meeting_link,
+      teacher_id: cls.teacher?._id || cls.teacher_id || "",
+      teacher_name: cls.teacher?.name || cls.teacher_name || "",
     }));
   }, [classesData]);
 
@@ -57,19 +60,19 @@ const Classes = () => {
           </p>
         </div>
         <div className="flex gap-2 w-full md:w-auto">
-          <Button 
+          <Button
             variant="outline"
             className="gap-2 font-bold border-white/10 hidden md:flex"
           >
             <MonitorPlay className="h-4 w-4" />
             Watch Recordings
           </Button>
-          <Button 
+          <Button
             onClick={() => onOpen("scheduleClass", {})}
             className="gap-2 bg-primary hover:bg-primary/90 transition-all font-bold shadow-lg shadow-primary/20 flex-1 md:flex-none"
           >
             <Plus className="h-4 w-4" />
-            Schedule Class
+            Add Class
           </Button>
         </div>
       </div>
@@ -100,8 +103,8 @@ const Classes = () => {
         <CardContent className="p-0">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-24 gap-4">
-                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
-                <div className="text-xs font-bold text-muted-foreground animate-pulse uppercase tracking-widest">Loading Session Data...</div>
+              <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
+              <div className="text-xs font-bold text-muted-foreground animate-pulse uppercase tracking-widest">Loading Session Data...</div>
             </div>
           ) : classTableData.length === 0 ? (
             <div className="text-center py-24 px-4">
@@ -112,9 +115,9 @@ const Classes = () => {
               <p className="text-xs text-muted-foreground mt-1">Start by scheduling your first live session.</p>
             </div>
           ) : (
-             <div className="min-w-full">
-                <DataTable columns={columns} data={classTableData} />
-             </div>
+            <div className="min-w-full">
+              <DataTable columns={columns} data={classTableData} />
+            </div>
           )}
         </CardContent>
       </Card>

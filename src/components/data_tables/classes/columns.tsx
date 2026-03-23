@@ -2,7 +2,7 @@
 
 import type { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
-import { MoreHorizontal, Pencil, Trash, Video, Calendar, Clock, ExternalLink } from "lucide-react"
+import { MoreHorizontal, Pencil, Trash, Video, Calendar, Clock, ExternalLink, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -12,15 +12,60 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useModal } from "@/hooks/use-model-store"
+import { useNavigate } from "react-router-dom"
 
 export type Class = {
   id: string
   title: string
   subject?: string
   batch_name: string
+  batch_id?: string
   class_date: string
   class_time: string
   meeting_link?: string
+  teacher_id?: string
+  teacher_name?: string
+}
+
+const ClassActions = ({ cls }: { cls: Class }) => {
+  const { onOpen } = useModal()
+  const navigate = useNavigate()
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-muted rounded-full">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-48 shadow-xl border bg-background backdrop-blur-xl">
+        <DropdownMenuLabel className="text-[10px] uppercase tracking-widest text-muted-foreground opacity-70">Session Control</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={() => navigate(`/admin/classes/${cls.id}`)}
+          className="gap-2 focus:bg-primary focus:text-white transition-colors cursor-pointer rounded-md m-1"
+        >
+          <Eye className="h-4 w-4" />
+          View Detail
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => onOpen("editClass", { classData: cls })}
+          className="gap-2 focus:bg-secondary focus:text-white transition-colors cursor-pointer rounded-md m-1"
+        >
+          <Pencil className="h-4 w-4" />
+          Edit Session
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => onOpen("deleteClass", { classData: cls })}
+          className="text-destructive gap-2 focus:bg-destructive focus:text-white transition-colors cursor-pointer rounded-md m-1"
+        >
+          <Trash className="h-4 w-4" />
+          Cancel Class
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
 }
 
 export const columns: ColumnDef<Class>[] = [
@@ -81,29 +126,7 @@ export const columns: ColumnDef<Class>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-muted rounded-full">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48 shadow-xl border-white/5 bg-card/95 backdrop-blur-xl">
-            <DropdownMenuLabel className="text-[10px] uppercase tracking-widest text-muted-foreground opacity-70">Session Control</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 focus:bg-secondary focus:text-white transition-colors cursor-pointer rounded-md m-1">
-                <Pencil className="h-4 w-4" />
-                Edit Session
-            </DropdownMenuItem>
-            <DropdownMenuItem className="text-destructive gap-2 focus:bg-destructive focus:text-white transition-colors cursor-pointer rounded-md m-1">
-                <Trash className="h-4 w-4" />
-                Cancel Class
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    cell: ({ row }) => <ClassActions cls={row.original} />,
   },
 ]
+

@@ -18,6 +18,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 import AuthProvider from "./providers/AuthProvider";
 import UserDetail from "./pages/admin/users/user_profile";
 import AdminProfile from "./pages/admin/AdminProfile";
+import ClassDetail from "./pages/admin/ClassDetail";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ const App = () => (
                 <Route path="users/:id" element={<UserDetail />} />
                 <Route path="batches" element={<Batches />} />
                 <Route path="classes" element={<Classes />} />
+                <Route path="classes/:id" element={<ClassDetail />} />
                 <Route path="security" element={<Security />} />
                 <Route path="settings" element={<Settings />} />
                 <Route path="profile" element={<AdminProfile />} />
