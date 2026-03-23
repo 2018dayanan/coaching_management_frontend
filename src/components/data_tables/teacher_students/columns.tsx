@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -18,6 +19,10 @@ export type TeacherStudent = {
   uniqueId: string;
   email: string;
   status: string;
+  batches: Array<{
+    name: string;
+    subject: string;
+  }>;
 };
 
 export const columns: ColumnDef<TeacherStudent>[] = [
@@ -58,6 +63,23 @@ export const columns: ColumnDef<TeacherStudent>[] = [
     header: "Email",
   },
   {
+    accessorKey: "batches",
+    header: "Enrolled Batches",
+    cell: ({ row }) => {
+      const batches = row.original.batches || [];
+      return (
+        <div className="flex flex-wrap gap-1 max-w-[200px]">
+          {batches.map((b, i) => (
+            <Badge key={i} variant="outline" className="text-[9px] bg-indigo-500/5 text-indigo-600 border-indigo-500/10 px-1.5 py-0 uppercase font-black italic">
+              {b.name}
+            </Badge>
+          ))}
+          {batches.length === 0 && <span className="text-xs text-muted-foreground italic">No batches</span>}
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
@@ -85,8 +107,8 @@ export const columns: ColumnDef<TeacherStudent>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuLabel>Student Actions</DropdownMenuLabel>
-            <DropdownMenuItem 
-              onClick={() => navigate(`/teacher/dashboard/students/${student.id}`)} 
+            <DropdownMenuItem
+              onClick={() => navigate(`/teacher/dashboard/students/${student.id}`)}
               className="gap-2 cursor-pointer"
             >
               <User className="h-4 w-4 text-primary" />

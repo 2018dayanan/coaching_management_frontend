@@ -5,18 +5,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Users, GraduationCap, Search } from "lucide-react";
+import { Users, Search } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getMyStudents } from "@/api/educationTeacherApi";
 import { DataTable } from "@/components/DataTable";
 import { columns, type TeacherStudent } from "@/components/data_tables/teacher_students/columns";
 import { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { useModal } from "@/hooks/use-model-store";
 
 const StudentList = () => {
-  const { onOpen } = useModal();
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data, isLoading, error } = useQuery({
@@ -37,7 +34,11 @@ const StudentList = () => {
         name: student.name,
         uniqueId: student.unique_id,
         email: student.email || "N/A",
-        status: "active", // Based on documentation mock
+        status: student.enrolled_batches?.[0]?.status || "active",
+        batches: student.enrolled_batches?.map((eb: any) => ({
+          name: eb.batch?.name || "N/A",
+          subject: eb.batch?.subject || "N/A"
+        })) || []
       }));
   }, [data, searchTerm]);
 
