@@ -19,6 +19,7 @@ import {
   Settings,
   Shield,
   UserCircle,
+  ListChecks,
 } from "lucide-react";
 
 import { NavLink, useLocation } from "react-router-dom";
@@ -30,6 +31,7 @@ const menuItems = [
   { title: "Teacher Management", adminUrl: "/admin/teachers", icon: Users, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN"] },
   { title: "Batch Management", adminUrl: "/admin/batches", icon: BookOpen, accent: "emerald", roles: ["ADMIN", "SUPER_ADMIN"] },
   { title: "Class Management", adminUrl: "/admin/classes", teacherUrl: "/teacher/dashboard/classes", icon: Video, accent: "blue", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
+  { title: "Task Management", adminUrl: "/admin/tasks", teacherUrl: "/teacher/dashboard/tasks", icon: ListChecks, accent: "indigo", roles: ["TEACHER"] },
   { title: "Security", adminUrl: "/admin/security", icon: Shield, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN"] },
   { title: "Settings", adminUrl: "/admin/settings", icon: Settings, accent: "blue", roles: ["ADMIN", "SUPER_ADMIN"] },
   { title: "Profile", adminUrl: "/admin/profile", teacherUrl: "/teacher/dashboard/profile", icon: UserCircle, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },

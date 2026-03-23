@@ -22,6 +22,9 @@ import UserDetail from "./pages/admin/users/user_profile";
 import AdminProfile from "./pages/admin/AdminProfile";
 import ClassDetail from "./pages/admin/ClassDetail";
 import Teachers from "./pages/admin/Teachers";
+import TeacherStudentList from "./pages/teacher/students/StudentList";
+import TeacherStudentDetail from "./pages/teacher/students/StudentDetail";
+import TaskManagement from "./pages/teacher/tasks/TaskManagement";
 
 const queryClient = new QueryClient();
 
@@ -72,7 +75,10 @@ const App = () => (
                 }
               >
                 <Route index element={<TeacherDashboard />} />
-                <Route path="users" element={<Users />} />
+                <Route path="users" element={<TeacherStudentList />} />
+                <Route path="students" element={<TeacherStudentList />} />
+                <Route path="students/:id" element={<TeacherStudentDetail />} />
+                <Route path="tasks" element={<TaskManagement />} />
                 <Route path="classes" element={<Classes />} />
                 <Route path="classes/:id" element={<ClassDetail />} />
                 <Route path="profile" element={<AdminProfile />} />
