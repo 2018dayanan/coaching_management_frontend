@@ -3,10 +3,13 @@ import { create } from "zustand";
 export type ModalType = 
   | "addUser" 
   | "editUser" 
+  | "deleteUser"
   | "createBatch" 
   | "editBatch" 
+  | "deleteBatch"
   | "scheduleClass" 
-  | "editClass";
+  | "editClass" 
+  | "deleteClass";
 
 interface ModalStore {
   type: ModalType | null;

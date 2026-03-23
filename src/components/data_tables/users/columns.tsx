@@ -10,8 +10,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, User, Pencil, Trash, ShieldCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useModal } from "@/hooks/use-model-store";
 
 export type User = {
   id: string;
@@ -104,8 +105,9 @@ export const columns: ColumnDef<User>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const { id } = row.original;
+      const user = row.original;
       const navigate = useNavigate();
+      const { onOpen } = useModal();
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -116,23 +118,26 @@ export const columns: ColumnDef<User>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigate(`/admin/users/${id}`)}>
+            <DropdownMenuItem onClick={() => navigate(`/admin/users/${user.id}`)} className="gap-2">
+              <User className="h-4 w-4" />
               View Profile
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigate(`/admin/users/${id}`)}>
+            <DropdownMenuItem onClick={() => onOpen("editUser", { user })} className="gap-2">
+              <Pencil className="h-4 w-4" />
               Edit User
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => {
-              if (window.confirm('Are you sure you want to delete this user?')) {
-                console.log('Delete user', id);
-              }
-            }}>
+            <DropdownMenuItem 
+              onClick={() => onOpen("deleteUser", { id: user.id, type: "user", name: user.name })}
+              className="text-destructive gap-2"
+            >
+              <Trash className="h-4 w-4" />
               Delete User
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => {
-              console.log('Verify user', id);
-            }}>
+              console.log('Verify user', user.id);
+            }} className="gap-2">
+              <ShieldCheck className="h-4 w-4" />
               Verify User
             </DropdownMenuItem>
           </DropdownMenuContent>

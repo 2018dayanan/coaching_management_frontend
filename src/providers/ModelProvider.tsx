@@ -1,5 +1,6 @@
 import { AddUserDialog } from "@/components/models/create-user-model";
 import { EditUserDialog } from "@/components/models/edit-user-model";
+import { DeleteUserDialog } from "@/components/models/delete-user-modal";
 import { useState, useEffect } from "react";
 
 const ModelProvider = () => {
@@ -17,6 +18,7 @@ const ModelProvider = () => {
     <>
       <AddUserDialog />
       <EditUserDialog />
+      <DeleteUserDialog />
       {/* Add coaching-specific models here as they are created */}
     </>
   );
