@@ -1,4 +1,4 @@
-# Shubha Margha Admin Panel
+# Coaching Management System
 
 A comprehensive coaching and education management system built with React, TypeScript, and Vite. This platform provides a robust administrative interface for managing students, teachers, classes, batches, and academic performance.
 
@@ -49,7 +49,7 @@ src/
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/2018dayanan/coaching_management_frontend
    ```
 2. Install dependencies:
    ```bash
