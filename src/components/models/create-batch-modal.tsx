@@ -41,8 +41,8 @@ export const CreateBatchDialog = () => {
 
   // Fetch Teachers
   const { data: teachersData } = useQuery({
-    queryKey: ["education-teachers"],
-    queryFn: () => getAllEducationUsers({ role: "teacher" }),
+    queryKey: ["education-teachers", "active"],
+    queryFn: () => getAllEducationUsers({ role: "teacher", status: "active" }),
     enabled: isModalOpen,
   });
 

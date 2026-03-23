@@ -7,9 +7,14 @@ const ProtectedRoute = ({ allowedRoles }: { allowedRoles: any[] }) => {
   if (loading) {
     return <FullscreenLoader/>;
   }
-  const isAllowedRole = allowedRoles.includes(admin?.role);
-  if (!isAuthenticated && !isAllowedRole) {
-    return <Navigate to={"/auth/login"} replace />;
+  if (!isAuthenticated) {
+    return <Navigate to={"/admin/auth/login"} replace />;
+  }
+
+  const isAllowedRole = !allowedRoles || allowedRoles.length === 0 || allowedRoles.includes(admin?.role);
+  
+  if (!isAllowedRole) {
+    return <Navigate to={"/admin/auth/login"} replace />;
   }
 
   return <Outlet />;

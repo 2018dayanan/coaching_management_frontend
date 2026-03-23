@@ -34,8 +34,8 @@ export const ScheduleClassDialog = () => {
   const isModalOpen = isOpen && type === "scheduleClass";
 
   const { data: teachersData } = useQuery({
-    queryKey: ["education-teachers"],
-    queryFn: () => getAllEducationUsers({ role: "teacher" }),
+    queryKey: ["education-teachers", "active"],
+    queryFn: () => getAllEducationUsers({ role: "teacher", status: "active" }),
     enabled: isModalOpen,
   });
 

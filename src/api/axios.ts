@@ -41,7 +41,7 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
       try {
-        const { data } = await api.post("/auth/refresh");
+        const { data } = await api.post("/admin/auth/refresh");
         localStorage.setItem("token", data.accessToken);
 
         processQueue(null, data.accessToken);
@@ -49,7 +49,7 @@ api.interceptors.response.use(
       } catch (err) {
         processQueue(err, null);
         localStorage.removeItem("token");
-        window.location.href = "/auth/login";
+        window.location.href = "/admin/auth/login";
         return Promise.reject(err);
       } finally {
         isRefreshing = false;

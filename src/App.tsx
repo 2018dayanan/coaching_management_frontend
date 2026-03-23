@@ -32,7 +32,7 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <Routes>
-            <Route path="/auth/login" element={<SuperAdminLogin />} />
+            <Route path="/admin/auth/login" element={<SuperAdminLogin />} />
             <Route element={<ProtectedRoute allowedRoles={["admin", "SUPER_ADMIN"]} />}>
               <Route path="/" element={<Navigate to={"/admin"} />} />
               <Route

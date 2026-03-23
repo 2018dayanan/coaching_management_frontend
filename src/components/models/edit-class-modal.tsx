@@ -35,8 +35,8 @@ export const EditClassDialog = () => {
   const classData = data?.classData;
 
   const { data: teachersData } = useQuery({
-    queryKey: ["education-teachers"],
-    queryFn: () => getAllEducationUsers({ role: "teacher" }),
+    queryKey: ["education-teachers", "active"],
+    queryFn: () => getAllEducationUsers({ role: "teacher", status: "active" }),
     enabled: isModalOpen,
   });
 
@@ -54,7 +54,6 @@ export const EditClassDialog = () => {
     handleSubmit,
     control,
     reset,
-    formState: { errors },
   } = useForm<UpdateClassBody>({});
 
   // Pre-populate form with existing class data
