@@ -18,6 +18,7 @@ import {
   Video,
   Settings,
   Shield,
+  UserCircle,
 } from "lucide-react";
 
 import { NavLink, useLocation } from "react-router-dom";
@@ -29,6 +30,7 @@ const menuItems = [
   { title: "Class Management", url: "/admin/classes", icon: Video, accent: "blue" },
   { title: "Security", url: "/admin/security", icon: Shield, accent: "indigo" },
   { title: "Settings", url: "/admin/settings", icon: Settings, accent: "blue" },
+  { title: "Admin Profile", url: "/admin/profile", icon: UserCircle, accent: "indigo" },
 ];
 
 export default function AppSidebar() {

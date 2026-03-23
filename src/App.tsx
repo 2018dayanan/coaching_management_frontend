@@ -17,6 +17,7 @@ import { SidebarProvider } from "./components/ui/sidebar";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 import AuthProvider from "./providers/AuthProvider";
 import UserDetail from "./pages/admin/users/user_profile";
+import AdminProfile from "./pages/admin/AdminProfile";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => (
                 <Route path="classes" element={<Classes />} />
                 <Route path="security" element={<Security />} />
                 <Route path="settings" element={<Settings />} />
+                <Route path="profile" element={<AdminProfile />} />
               </Route>
             </Route>
 

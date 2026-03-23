@@ -18,6 +18,17 @@ export type AdminLoginResponse = {
   };
 };
 
+export type AdminProfile = {
+  _id: string;
+  name: string;
+  role: string;
+  username: string;
+  email: string;
+  phone: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
 const loginEducationAdmin = async (
   body: AdminLoginBody
 ): Promise<AdminLoginResponse> => {
@@ -31,4 +42,14 @@ const loginEducationAdmin = async (
   return data;
 };
 
-export { loginEducationAdmin };
+/**
+ * GET /admin/auth/profile
+ * Fetch the authenticated admin's profile
+ */
+const getAdminProfile = async (): Promise<AdminProfile> => {
+  const { data } = await api.get("/admin/auth/profile");
+  return data.data;
+};
+
+export { loginEducationAdmin, getAdminProfile };
+
