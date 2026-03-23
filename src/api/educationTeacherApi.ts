@@ -84,7 +84,25 @@ export type Task = {
   createdAt: string;
 };
 
+export type TeacherDashboardData = {
+  stats: {
+    totalBatches: number;
+    totalClasses: number;
+    totalTasks: number;
+    totalStudents: number;
+    pendingSubmissions: number;
+  };
+  upcomingClasses: any[];
+  recentTasks: any[];
+};
+
 // --- API Functions ---
+
+// 📊 Dashboard Stats
+export const getTeacherDashboardStats = async (): Promise<TeacherDashboardData> => {
+  const { data } = await api.get(`${BASE_PATH}/dashboard`);
+  return data.data;
+};
 
 // 🤝 Enrollment Management
 

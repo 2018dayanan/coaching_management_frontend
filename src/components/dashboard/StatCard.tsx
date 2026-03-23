@@ -9,7 +9,8 @@ interface StatCardProps {
   changeType?: "positive" | "negative" | "neutral";
   icon: LucideIcon;
   subtitle?: string;
-  variant?: "blue" | "indigo" | "emerald";
+  variant?: "blue" | "indigo" | "emerald" | "orange" | "destructive";
+  className?: string;
 }
 
 export function StatCard({
@@ -19,16 +20,19 @@ export function StatCard({
   changeType = "neutral",
   icon: Icon,
   subtitle,
-  variant = "blue"
+  variant = "blue",
+  className
 }: StatCardProps) {
   return (
-    <Card className="hover:shadow-md transition-all duration-200 w-full relative overflow-hidden">
+    <Card className={cn("hover:shadow-md transition-all duration-200 w-full relative overflow-hidden", className)}>
       <div 
         className={cn(
           "absolute top-0 left-0 w-1 h-full",
           variant === "blue" && "bg-blue-500",
-          variant === "indigo" && "bg-secondary",
-          variant === "emerald" && "bg-accent"
+          variant === "indigo" && "bg-indigo-500",
+          variant === "emerald" && "bg-emerald-500",
+          variant === "orange" && "bg-orange-500",
+          variant === "destructive" && "bg-destructive"
         )} 
       />
       <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -39,8 +43,10 @@ export function StatCard({
           className={cn(
             "p-2 rounded-lg",
             variant === "blue" && "bg-blue-500/10 text-blue-500",
-            variant === "indigo" && "bg-secondary/10 text-secondary",
-            variant === "emerald" && "bg-emerald-500/10 text-emerald-500"
+            variant === "indigo" && "bg-indigo-500/10 text-indigo-500",
+            variant === "emerald" && "bg-emerald-500/10 text-emerald-500",
+            variant === "orange" && "bg-orange-500/10 text-orange-500",
+            variant === "destructive" && "bg-destructive/10 text-destructive"
           )}
         >
           <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
