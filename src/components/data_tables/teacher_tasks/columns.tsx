@@ -18,9 +18,16 @@ export type TeacherTask = {
   batchName: string;
   dueDate: string;
   assignedDate: string;
+  description: string;
+  batch_id: string;
+  attachment_url?: string;
+  original: any;
 };
 
-export const columns: ColumnDef<TeacherTask>[] = [
+export const columns = (
+  onEdit: (task: any) => void,
+  onDelete: (id: string) => void
+): ColumnDef<TeacherTask>[] => [
   {
     accessorKey: "title",
     header: "Task Title",
@@ -29,7 +36,9 @@ export const columns: ColumnDef<TeacherTask>[] = [
         <div className="p-2 bg-indigo-500/10 rounded-lg text-indigo-500">
           <FileText className="h-4 w-4" />
         </div>
-        <span className="font-bold text-foreground italic uppercase tracking-tight">{row.original.title}</span>
+        <span className="font-bold text-foreground italic uppercase tracking-tight">
+          {row.original.title}
+        </span>
       </div>
     ),
   },
@@ -37,7 +46,10 @@ export const columns: ColumnDef<TeacherTask>[] = [
     accessorKey: "subject",
     header: "Subject",
     cell: ({ row }) => (
-      <Badge variant="outline" className="border-indigo-400/20 text-indigo-600 bg-indigo-500/5 uppercase text-[10px] font-black">
+      <Badge
+        variant="outline"
+        className="border-indigo-400/20 text-indigo-600 bg-indigo-500/5 uppercase text-[10px] font-black"
+      >
         {row.original.subject}
       </Badge>
     ),
@@ -46,7 +58,9 @@ export const columns: ColumnDef<TeacherTask>[] = [
     accessorKey: "batchName",
     header: "Batch",
     cell: ({ row }) => (
-      <div className="text-sm font-medium text-muted-foreground uppercase italic">{row.original.batchName}</div>
+      <div className="text-sm font-medium text-muted-foreground uppercase italic">
+        {row.original.batchName}
+      </div>
     ),
   },
   {
@@ -62,7 +76,8 @@ export const columns: ColumnDef<TeacherTask>[] = [
   {
     id: "actions",
     header: "Actions",
-    cell: ({ }) => {
+    cell: ({ row }) => {
+      const task = row.original.original;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -73,12 +88,18 @@ export const columns: ColumnDef<TeacherTask>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-40 rounded-xl">
             <DropdownMenuLabel>Task Actions</DropdownMenuLabel>
-            <DropdownMenuItem className="gap-2 cursor-pointer">
+            <DropdownMenuItem 
+              className="gap-2 cursor-pointer"
+              onClick={() => onEdit(task)}
+            >
               <Pencil className="h-4 w-4 text-primary" />
               Edit Task
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive gap-2 cursor-pointer">
+            <DropdownMenuItem 
+              className="text-destructive gap-2 cursor-pointer"
+              onClick={() => onDelete(task._id)}
+            >
               <Trash className="h-4 w-4" />
               Delete Task
             </DropdownMenuItem>
