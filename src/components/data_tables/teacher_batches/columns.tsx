@@ -1,7 +1,14 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Eye, Users } from "lucide-react";
+import { Eye, Users, MoreHorizontal, Pencil } from "lucide-react";
 
 export type TeacherBatchTableData = {
   _id: string;
@@ -14,7 +21,10 @@ export type TeacherBatchTableData = {
   original: any; 
 };
 
-export const columns = (onViewDetails: (batch: any) => void): ColumnDef<TeacherBatchTableData>[] => [
+export const columns = (
+  onViewDetails: (batch: any) => void,
+  onEdit: (batch: any) => void
+): ColumnDef<TeacherBatchTableData>[] => [
   {
     accessorKey: "name",
     header: "Batch Name",
@@ -64,15 +74,31 @@ export const columns = (onViewDetails: (batch: any) => void): ColumnDef<TeacherB
     id: "actions",
     header: "Actions",
     cell: ({ row }) => (
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => onViewDetails(row.original.original)}
-        className="h-8 gap-2 rounded-lg text-indigo-500 hover:text-indigo-600 hover:bg-indigo-500/5 font-bold uppercase text-[10px] tracking-tighter"
-      >
-        <Eye className="h-4 w-4" />
-        View Details
-      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-40 rounded-xl">
+          <DropdownMenuLabel className="font-bold text-xs uppercase text-muted-foreground tracking-widest">Controls</DropdownMenuLabel>
+          <DropdownMenuItem 
+            className="gap-2 cursor-pointer font-medium text-xs uppercase italic tracking-tighter"
+            onClick={() => onViewDetails(row.original.original)}
+          >
+            <Eye className="h-4 w-4 text-indigo-500" />
+            Directory Detail
+          </DropdownMenuItem>
+          <DropdownMenuItem 
+            className="gap-2 cursor-pointer font-medium text-xs uppercase italic tracking-tighter"
+            onClick={() => onEdit(row.original.original)}
+          >
+            <Pencil className="h-4 w-4 text-primary" />
+            Modify Module
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     ),
   },
 ];

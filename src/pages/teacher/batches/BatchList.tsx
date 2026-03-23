@@ -1,8 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
-import { getMyBatches, type TeacherBatch } from "@/api/educationTeacherApi";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { 
+  getMyBatches, 
+  type TeacherBatch, 
+  createTeacherBatch, 
+  updateTeacherBatch,
+  getMyStudents,
+  type CreateBatchBody,
+  type UpdateBatchBody
+} from "@/api/educationTeacherApi";
 import { DataTable } from "@/components/DataTable";
 import { columns, type TeacherBatchTableData } from "@/components/data_tables/teacher_batches/columns";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import {
   Card,
   CardContent,
@@ -16,27 +24,120 @@ import {
   Calendar, 
   Users, 
   Info,
-  ChevronRight
+  ChevronRight,
+  Plus,
+  ArrowRight,
+  Settings2
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const TeacherBatchList = () => {
+  const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedBatch, setSelectedBatch] = useState<TeacherBatch | null>(null);
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [editingBatch, setEditingBatch] = useState<TeacherBatch | null>(null);
+  
+  // Create / Edit Form State
+  const [formData, setFormData] = useState({
+    name: "",
+    subject: "",
+    description: "",
+    start_date: "",
+    end_date: "",
+    status: "active"
+  });
 
-  const { data, isLoading, error } = useQuery({
+  // Student list state for editing
+  const [studentSearch, setStudentSearch] = useState("");
+  const [selectedStudentIds, setSelectedStudentIds] = useState<string[]>([]);
+  const [initialStudentIds, setInitialStudentIds] = useState<string[]>([]);
+
+  const { data, isLoading } = useQuery({
     queryKey: ["teacher-batches"],
     queryFn: () => getMyBatches(),
   });
+
+  const { data: allStudents } = useQuery({
+    queryKey: ["teacher-students-all"],
+    queryFn: () => getMyStudents(),
+  });
+
+  const createMutation = useMutation({
+    mutationFn: (body: CreateBatchBody) => createTeacherBatch(body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["teacher-batches"] });
+      toast.success("Batch created successfully!");
+      setIsCreateOpen(false);
+      resetForm();
+    },
+    onError: (err: any) => toast.error(err.response?.data?.message || "Failed to create batch")
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({ id, body }: { id: string; body: UpdateBatchBody }) => updateTeacherBatch(id, body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["teacher-batches"] });
+      toast.success("Batch updated successfully!");
+      setEditingBatch(null);
+    },
+    onError: (err: any) => toast.error(err.response?.data?.message || "Failed to update batch")
+  });
+
+  const resetForm = useCallback(() => {
+    setFormData({
+      name: "",
+      subject: "",
+      description: "",
+      start_date: "",
+      end_date: "",
+      status: "active"
+    });
+  }, []);
+
+  const handleEdit = useCallback((batch: TeacherBatch) => {
+    setEditingBatch(batch);
+    setFormData({
+      name: batch.name,
+      subject: batch.subject,
+      description: batch.description,
+      start_date: batch.start_date.split("T")[0],
+      end_date: batch.end_date.split("T")[0],
+      status: batch.status
+    });
+    const ids = batch.enrolled_students?.map(s => s._id) || [];
+    setSelectedStudentIds(ids);
+    setInitialStudentIds(ids);
+  }, []);
+
+  const batchColumns = useMemo(() => 
+    columns(setSelectedBatch, handleEdit),
+    [handleEdit]
+  );
 
   const tableData: TeacherBatchTableData[] = useMemo(() => {
     const batchesData = data || [];
@@ -57,9 +158,38 @@ const TeacherBatchList = () => {
       }));
   }, [data, searchTerm]);
 
-  const handleViewDetails = (batch: TeacherBatch) => {
-    setSelectedBatch(batch);
+  const handleSaveBatch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (editingBatch) {
+      const add_students = selectedStudentIds.filter(id => !initialStudentIds.includes(id));
+      const remove_students = initialStudentIds.filter(id => !selectedStudentIds.includes(id));
+      
+      const body: UpdateBatchBody = {
+        ...formData,
+        add_students,
+        remove_students
+      };
+      updateMutation.mutate({ id: editingBatch._id, body });
+    } else {
+      createMutation.mutate(formData as CreateBatchBody);
+    }
   };
+
+  const toggleStudent = useCallback((studentId: string) => {
+    setSelectedStudentIds(prev => 
+      prev.includes(studentId) 
+        ? prev.filter(id => id !== studentId) 
+        : [...prev, studentId]
+    );
+  }, []);
+
+  const filteredStudents = useMemo(() => {
+    if (!allStudents) return [];
+    return allStudents.filter(s => 
+      s.name.toLowerCase().includes(studentSearch.toLowerCase()) ||
+      s.unique_id.toLowerCase().includes(studentSearch.toLowerCase())
+    );
+  }, [allStudents, studentSearch]);
 
   if (isLoading) return (
     <div className="flex justify-center p-12">
@@ -67,17 +197,6 @@ const TeacherBatchList = () => {
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
         <p className="text-muted-foreground font-medium">Syncing batch records...</p>
       </div>
-    </div>
-  );
-
-  if (error) return (
-    <div className="flex justify-center p-12">
-      <Card className="border-destructive/20 bg-destructive/5 max-w-md w-full">
-        <CardHeader className="text-center">
-          <CardTitle className="text-destructive font-black italic uppercase italic">Directory Sync Failed</CardTitle>
-          <CardDescription>We encountered an error while retrieving your assigned batches.</CardDescription>
-        </CardHeader>
-      </Card>
     </div>
   );
 
@@ -93,11 +212,18 @@ const TeacherBatchList = () => {
             Monitor curriculum timelines and student enrollments for your active batches
           </p>
         </div>
+        <Button 
+          onClick={() => { resetForm(); setIsCreateOpen(true); }}
+          className="gap-2 bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-600/20 px-8 py-6 rounded-2xl font-black uppercase italic tracking-tighter"
+        >
+          <Plus className="h-5 w-5" />
+          Create Module
+        </Button>
       </div>
 
       {/* Stats Quick View */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card className="bg-gradient-to-br from-indigo-500/10 to-transparent border-indigo-500/20 overflow-hidden relative">
+        <Card className="bg-gradient-to-br from-indigo-500/10 to-transparent border-indigo-500/20 overflow-hidden relative rounded-3xl">
           <div className="absolute -right-4 -bottom-4 opacity-10">
             <Layers className="h-24 w-24" />
           </div>
@@ -107,7 +233,7 @@ const TeacherBatchList = () => {
           </CardHeader>
         </Card>
         
-        <Card className="bg-gradient-to-br from-emerald-500/10 to-transparent border-emerald-500/20 overflow-hidden relative">
+        <Card className="bg-gradient-to-br from-emerald-500/10 to-transparent border-emerald-500/20 overflow-hidden relative rounded-3xl">
           <div className="absolute -right-4 -bottom-4 opacity-10">
             <Calendar className="h-24 w-24" />
           </div>
@@ -132,22 +258,221 @@ const TeacherBatchList = () => {
                 placeholder="Search batches..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-background/50 border-border/60 focus:ring-primary/20 rounded-xl h-11"
+                className="pl-10 bg-background/50 border-border/60 focus:ring-primary/20 rounded-xl h-11 transition-all"
               />
             </div>
           </div>
         </CardHeader>
         <CardContent className="p-0">
           <DataTable
-            columns={columns(handleViewDetails) as any}
+            columns={batchColumns as any}
             data={tableData}
           />
         </CardContent>
       </Card>
 
-      {/* Batch Detail Modal */}
+      {/* Batch Create/Edit Dialog */}
+      <Dialog 
+        open={isCreateOpen || !!editingBatch} 
+        onOpenChange={(open) => {
+          if (!open) {
+            setIsCreateOpen(false);
+            setEditingBatch(null);
+          }
+        }}
+      >
+        <DialogContent className="sm:max-w-[600px] rounded-[2.5rem] border-none shadow-2xl overflow-hidden p-0 bg-background/95 backdrop-blur-xl">
+          <div className="h-3 bg-gradient-to-r from-indigo-600 to-violet-600" />
+          <div className="p-8">
+            <DialogHeader className="mb-6">
+              <DialogTitle className="text-3xl font-black italic uppercase italic">
+                {editingBatch ? "Modify" : "Create"} <span className="text-indigo-600 not-italic">Module</span>
+              </DialogTitle>
+              <DialogDescription className="font-medium text-muted-foreground mt-1">
+                {editingBatch ? "Update batch parameters and student enrollments." : "Define a new curriculum batch and timeline."}
+              </DialogDescription>
+            </DialogHeader>
+
+            <form onSubmit={handleSaveBatch} className="space-y-6">
+              <Tabs defaultValue="basics" className="w-full">
+                <TabsList className="grid grid-cols-2 bg-muted/50 p-1 rounded-2xl h-14 mb-6">
+                  <TabsTrigger value="basics" className="rounded-xl font-bold uppercase text-[10px] tracking-widest gap-2">
+                    <Settings2 className="h-3.5 w-3.5" />
+                    Core Specs
+                  </TabsTrigger>
+                  <TabsTrigger value="roster" className="rounded-xl font-bold uppercase text-[10px] tracking-widest gap-2">
+                    <Users className="h-3.5 w-3.5" />
+                    Student Roster
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="basics" className="space-y-4 animate-in fade-in slide-in-from-left-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2 col-span-2">
+                      <Label className="uppercase text-[10px] font-black tracking-widest text-indigo-500/70 ml-1">Batch Title</Label>
+                      <Input 
+                        required 
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        placeholder="e.g. Advanced System Architecture" 
+                        className="rounded-2xl h-12 bg-muted/40 border-border/40 focus:ring-2 ring-indigo-500/10 font-medium"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="uppercase text-[10px] font-black tracking-widest text-indigo-500/70 ml-1">Subject domain</Label>
+                      <Input 
+                        required 
+                        value={formData.subject}
+                        onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                        placeholder="e.g. Computer Science" 
+                        className="rounded-xl h-11 bg-muted/30 border-border/40"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="uppercase text-[10px] font-black tracking-widest text-indigo-500/70 ml-1">Cycle Status</Label>
+                      <Select 
+                        value={formData.status} 
+                        onValueChange={(val) => setFormData({...formData, status: val})}
+                      >
+                        <SelectTrigger className="rounded-xl h-11 bg-muted/30 border-border/40 font-medium capitalize">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="rounded-2xl shadow-xl">
+                          <SelectItem value="active" className="font-medium italic">Active</SelectItem>
+                          <SelectItem value="completed" className="font-medium italic">Completed</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="uppercase text-[10px] font-black tracking-widest text-indigo-500/70 ml-1">Start Date</Label>
+                      <Input 
+                        required 
+                        type="date"
+                        value={formData.start_date}
+                        onChange={(e) => setFormData({...formData, start_date: e.target.value})}
+                        className="rounded-xl h-11 bg-muted/30 border-border/40"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="uppercase text-[10px] font-black tracking-widest text-indigo-500/70 ml-1">End Date</Label>
+                      <Input 
+                        required 
+                        type="date"
+                        value={formData.end_date}
+                        onChange={(e) => setFormData({...formData, end_date: e.target.value})}
+                        className="rounded-xl h-11 bg-muted/30 border-border/40"
+                      />
+                    </div>
+                    <div className="space-y-2 col-span-2">
+                      <Label className="uppercase text-[10px] font-black tracking-widest text-indigo-500/70 ml-1">Curriculum Description</Label>
+                      <Textarea 
+                        required 
+                        value={formData.description}
+                        onChange={(e) => setFormData({...formData, description: e.target.value})}
+                        placeholder="Overview of the learning objectives..." 
+                        className="rounded-[2rem] min-h-[100px] bg-muted/30 border-border/40 pt-4 px-4 font-medium"
+                      />
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="roster" className="space-y-4 animate-in fade-in slide-in-from-right-4">
+                  {!editingBatch && (
+                    <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-2xl flex items-center gap-3">
+                      <Info className="h-5 w-5 text-amber-600" />
+                      <p className="text-xs font-medium text-amber-700 leading-tight"> Enrollments can be managed after the initial module creation. </p>
+                    </div>
+                  )}
+                  
+                  {editingBatch && (
+                    <div className="space-y-4">
+                      <div className="relative group">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-indigo-500 transition-colors" />
+                        <Input 
+                          placeholder="Search directory for students..." 
+                          value={studentSearch}
+                          onChange={(e) => setStudentSearch(e.target.value)}
+                          className="pl-10 h-11 bg-muted/30 border-border/40 rounded-xl"
+                        />
+                      </div>
+                      
+                      <div className="flex gap-2 mb-2">
+                        <Badge variant="secondary" className="font-bold text-[9px] uppercase tracking-tighter bg-indigo-500/10 text-indigo-600 border-none">
+                          Current: {initialStudentIds.length}
+                        </Badge>
+                        <Badge variant="secondary" className="font-bold text-[9px] uppercase tracking-tighter bg-emerald-500/10 text-emerald-600 border-none">
+                          Target: {selectedStudentIds.length}
+                        </Badge>
+                      </div>
+
+                      <ScrollArea className="h-64 rounded-2xl border border-border/40 bg-muted/20 p-2">
+                        <div className="space-y-1">
+                          {filteredStudents?.map((student) => {
+                            const isSelected = selectedStudentIds.includes(student._id);
+                            return (
+                              <div 
+                                key={student._id}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  toggleStudent(student._id);
+                                }}
+                                className={`flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer group ${
+                                  isSelected ? "bg-indigo-500/10 border border-indigo-500/20" : "hover:bg-muted/50 border border-transparent"
+                                }`}
+                              >
+                                <div className="flex items-center gap-3">
+                                  <Avatar className="h-8 w-8 ring-1 ring-border/40">
+                                    <AvatarImage src={student.profile_picture} />
+                                    <AvatarFallback className="text-[10px] uppercase font-black">{student.name.charAt(0)}</AvatarFallback>
+                                  </Avatar>
+                                  <div className="flex flex-col">
+                                    <span className="text-sm font-bold tracking-tight uppercase italic">{student.name}</span>
+                                    <span className="text-[9px] font-black text-muted-foreground uppercase opacity-60 tracking-widest">{student.unique_id}</span>
+                                  </div>
+                                </div>
+                                <div onClick={(e) => e.stopPropagation()}>
+                                  <Checkbox 
+                                    checked={isSelected}
+                                    onCheckedChange={() => toggleStudent(student._id)}
+                                    className="rounded-md border-indigo-500/50 data-[state=checked]:bg-indigo-600"
+                                  />
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </ScrollArea>
+                    </div>
+                  )}
+                </TabsContent>
+              </Tabs>
+
+              <DialogFooter className="pt-4 border-t border-border/20">
+                <Button 
+                  type="submit" 
+                  disabled={createMutation.isPending || updateMutation.isPending}
+                  className="w-full h-14 rounded-2xl bg-indigo-600 hover:bg-indigo-700 shadow-2xl shadow-indigo-600/30 font-black uppercase italic tracking-tighter text-lg group transition-all"
+                >
+                   {createMutation.isPending || updateMutation.isPending ? "Syncing..." : (
+                     <div className="flex items-center gap-2">
+                        {editingBatch ? "Confirm Update" : "Establish Module"}
+                        <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                     </div>
+                   )}
+                </Button>
+              </DialogFooter>
+            </form>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Batch Detail Modal (Read Only) */}
       <Dialog open={!!selectedBatch} onOpenChange={(open) => !open && setSelectedBatch(null)}>
         <DialogContent className="max-w-3xl bg-background/95 backdrop-blur-2xl border-border/60 shadow-2xl rounded-[2.5rem] overflow-hidden p-0 gap-0 ring-1 ring-white/10">
+          <DialogHeader className="sr-only">
+            <DialogTitle>{selectedBatch?.name || "Batch Details"}</DialogTitle>
+          </DialogHeader>
           {selectedBatch && (
             <div className="flex flex-col h-[85vh] md:h-auto max-h-[90vh]">
               {/* Animated Header Section */}

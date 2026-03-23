@@ -17,7 +17,7 @@ import {
 } from "@/api/educationTeacherApi";
 import { DataTable } from "@/components/DataTable";
 import { columns, type TeacherTask } from "@/components/data_tables/teacher_tasks/columns";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
 import { Input } from "@/components/ui/input";
 import {
   Dialog,
@@ -128,15 +128,20 @@ const TaskManagement = () => {
     }
   });
 
-  const handleEdit = (task: any) => {
+  const handleEdit = useCallback((task: any) => {
     setEditingTask(task);
-  };
+  }, []);
 
-  const handleDelete = (id: string) => {
+  const handleDelete = useCallback((id: string) => {
     if (window.confirm("Are you sure you want to delete this task?")) {
       deleteTaskMutation.mutate(id);
     }
-  };
+  }, [deleteTaskMutation]);
+
+  const taskColumns = useMemo(() => 
+    columns(handleEdit, handleDelete),
+    [handleEdit, handleDelete]
+  );
 
   const taskTableData: TeacherTask[] = useMemo(() => {
     const tasks = data || [];
@@ -352,7 +357,7 @@ const TaskManagement = () => {
         </CardHeader>
         <CardContent className="p-0">
           <DataTable
-            columns={columns(handleEdit, handleDelete) as any}
+            columns={taskColumns as any}
             data={taskTableData}
           />
         </CardContent>

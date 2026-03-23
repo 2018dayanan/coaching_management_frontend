@@ -76,7 +76,7 @@ export type StudentDetail = {
 
 export type Submission = {
   _id: string;
-  student_id: { name: string; [key: string]: any };
+  student_id: { name: string;[key: string]: any };
   task_id: { title: string };
   file_url: string;
   submitted_at: string;
@@ -114,6 +114,26 @@ export type TeacherBatch = {
   }[];
   createdAt: string;
   updatedAt: string;
+};
+
+export type CreateBatchBody = {
+  name: string;
+  subject: string;
+  description: string;
+  start_date: string;
+  end_date: string;
+  status: string;
+};
+
+export type UpdateBatchBody = {
+  name?: string;
+  subject?: string;
+  description?: string;
+  start_date?: string;
+  end_date?: string;
+  status?: string;
+  add_students?: string[];
+  remove_students?: string[];
 };
 
 export type Task = {
@@ -205,8 +225,22 @@ export const deleteTeacherTask = async (id: string): Promise<any> => {
   return data;
 };
 
-// 🏛️ Batch Management
 export const getMyBatches = async (): Promise<TeacherBatch[]> => {
   const { data } = await api.get(`${BASE_PATH}/batches`);
   return data.data;
+};
+
+export const createTeacherBatch = async (body: CreateBatchBody): Promise<any> => {
+  const { data } = await api.post(`${BASE_PATH}/batches`, body);
+  return data;
+};
+
+export const getBatchById = async (id: string): Promise<TeacherBatch> => {
+  const { data } = await api.get(`${BASE_PATH}/batches/${id}`);
+  return data.data;
+};
+
+export const updateTeacherBatch = async (id: string, body: UpdateBatchBody): Promise<any> => {
+  const { data } = await api.patch(`${BASE_PATH}/batches/${id}`, body);
+  return data;
 };
