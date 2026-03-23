@@ -48,10 +48,10 @@ const loginEducationAdmin = async (
 };
 
 /**
- * POST /teacher/auth/login
- * Authenticate a teacher
+ * POST /auth/login
+ * Unified login for Teachers and Students
  */
-const loginEducationTeacher = async (
+export const loginEducationUser = async (
   body: AdminLoginBody
 ): Promise<AdminLoginResponse> => {
   const { data } = await api.post<AdminLoginResponse>("/auth/login", body, {
@@ -72,5 +72,5 @@ const getAdminProfile = async (): Promise<AdminProfile> => {
   return data.data;
 };
 
-export { loginEducationAdmin, loginEducationTeacher, getAdminProfile };
+export { loginEducationAdmin, getAdminProfile };
 

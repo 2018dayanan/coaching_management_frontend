@@ -27,6 +27,8 @@ import TaskManagement from "./pages/teacher/tasks/TaskManagement";
 import TeacherBatchList from "./pages/teacher/batches/BatchList";
 import TeacherClassList from "./pages/teacher/classes/ClassList";
 import LandingPage from "./pages/home/LandingPage";
+import StudentLogin from "./pages/auth/StudentLogin";
+import StudentDashboard from "./pages/student/Dashboard";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +43,7 @@ const App = () => (
             <Route path="/admin/auth/login" element={<SuperAdminLogin />} />
             <Route path="/auth/login" element={<TeacherLogin />} />
             <Route path="/teacher/auth/login" element={<TeacherLogin />} />
+            <Route path="/auth/student/login" element={<StudentLogin />} />
             <Route path="/" element={<LandingPage />} />
             <Route element={<ProtectedRoute allowedRoles={["ADMIN", "SUPER_ADMIN"]} />}>
               <Route
@@ -89,6 +92,21 @@ const App = () => (
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
+            {/* Student Routes */}
+            <Route element={<ProtectedRoute allowedRoles={["STUDENT"]} />}>
+              <Route path="/student" element={<Navigate to="/student/dashboard" replace />} />
+              <Route
+                path="/student/dashboard"
+                element={
+                  <SidebarProvider>
+                    <DashboardLayout />
+                  </SidebarProvider>
+                }
+              >
+                <Route index element={<StudentDashboard />} />
+                <Route path="profile" element={<AdminProfile />} />
+              </Route>
+            </Route>
           </Routes>
         </AuthProvider>
       </BrowserRouter>

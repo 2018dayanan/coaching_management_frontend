@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { type AdminLoginResponse, type LoggedUser } from "../api/educationAuthApi";
+import { type LoggedUser } from "../api/educationAuthApi";
 import { useNavigate } from "react-router-dom";
 
 type Admin = LoggedUser;
@@ -47,8 +47,11 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     qc.invalidateQueries({ queryKey: ["admin"] });
     
     // Role-based navigation
-    if (adminData.role.toUpperCase() === "TEACHER") {
+    const role = adminData.role.toUpperCase();
+    if (role === "TEACHER") {
       navigate("/teacher/dashboard", { replace: true });
+    } else if (role === "STUDENT") {
+      navigate("/student/dashboard", { replace: true });
     } else {
       navigate("/admin", { replace: true });
     }
@@ -60,19 +63,28 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(null);
     setAdmin(null);
     qc.clear();
-    const isTeacherPortal = 
-      window.location.pathname === "/auth/login" || 
-      window.location.pathname === "/teacher/auth/login" || 
-      window.location.pathname.startsWith("/teacher");
-    navigate(isTeacherPortal ? "/auth/login" : "/admin/auth/login", { replace: true });
+    const path = window.location.pathname;
+    const isTeacherPortal = path === "/auth/login" || path === "/teacher/auth/login" || path.startsWith("/teacher");
+    const isStudentPortal = path === "/auth/student/login" || path.startsWith("/student");
+
+    if (isTeacherPortal) {
+      navigate("/auth/login", { replace: true });
+    } else if (isStudentPortal) {
+      navigate("/auth/student/login", { replace: true });
+    } else {
+      navigate("/admin/auth/login", { replace: true });
+    }
   };
 
   useEffect(() => {
     // Redirect logic: if tokens are present and we're at a login page, go to appropriate dashboard
-    const loginPaths = ["/admin/auth/login", "/auth/login", "/teacher/auth/login"];
+    const loginPaths = ["/admin/auth/login", "/auth/login", "/teacher/auth/login", "/auth/student/login"];
     if (token && admin && loginPaths.includes(window.location.pathname)) {
-      if (admin.role.toUpperCase() === "TEACHER") {
+      const role = admin.role.toUpperCase();
+      if (role === "TEACHER") {
         navigate("/teacher/dashboard", { replace: true });
+      } else if (role === "STUDENT") {
+        navigate("/student/dashboard", { replace: true });
       } else {
         navigate("/admin", { replace: true });
       }

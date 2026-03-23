@@ -26,7 +26,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "@/providers/AuthProvider";
 
 const menuItems = [
-  { title: "Dashboard", adminUrl: "/admin", teacherUrl: "/teacher/dashboard", icon: LayoutDashboard, accent: "blue", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
+  { title: "Dashboard", adminUrl: "/admin", teacherUrl: "/teacher/dashboard", studentUrl: "/student/dashboard", icon: LayoutDashboard, accent: "blue", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER", "STUDENT"] },
   { title: "Student Management", adminUrl: "/admin/users", teacherUrl: "/teacher/dashboard/students", icon: Users, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
   { title: "Teacher Management", adminUrl: "/admin/teachers", icon: Users, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN"] },
   { title: "Batch Management", adminUrl: "/admin/batches", teacherUrl: "/teacher/dashboard/batches", icon: BookOpen, accent: "emerald", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
@@ -34,7 +34,7 @@ const menuItems = [
   { title: "Task Management", adminUrl: "/admin/tasks", teacherUrl: "/teacher/dashboard/tasks", icon: ListChecks, accent: "indigo", roles: ["TEACHER"] },
   { title: "Security", adminUrl: "/admin/security", icon: Shield, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN"] },
   { title: "Settings", adminUrl: "/admin/settings", icon: Settings, accent: "blue", roles: ["ADMIN", "SUPER_ADMIN"] },
-  { title: "Profile", adminUrl: "/admin/profile", teacherUrl: "/teacher/dashboard/profile", icon: UserCircle, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
+  { title: "Profile", adminUrl: "/admin/profile", teacherUrl: "/teacher/dashboard/profile", studentUrl: "/student/dashboard/profile", icon: UserCircle, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER", "STUDENT"] },
 ];
 
 export default function AppSidebar() {
@@ -65,10 +65,10 @@ export default function AppSidebar() {
           {(open || isMobile) && (
             <div className="flex flex-col">
               <h1 className="text-md font-bold text-foreground leading-tight">
-                Education <span className="text-primary">{admin?.role === "TEACHER" ? "Teacher" : "Admin"}</span>
+                Education <span className="text-primary">{admin?.role === "TEACHER" ? "Teacher" : admin?.role === "STUDENT" ? "Student" : "Admin"}</span>
               </h1>
               <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold opacity-60">
-                {admin?.role === "TEACHER" ? "Teacher Portal" : "Management Portal"}
+                {admin?.role === "TEACHER" ? "Teacher Portal" : admin?.role === "STUDENT" ? "Student Portal" : "Management Portal"}
               </p>
             </div>
           )}
@@ -80,11 +80,18 @@ export default function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-1.5">
-              {filteredItems.map((item) => {
-                const isTeacher = admin?.role?.toUpperCase() === "TEACHER";
-                const url = isTeacher ? (item.teacherUrl || item.adminUrl) : item.adminUrl;
+               {filteredItems.map((item) => {
+                const userRole = admin?.role?.toUpperCase();
+                const isTeacher = userRole === "TEACHER";
+                const isStudent = userRole === "STUDENT";
+                const url = isTeacher 
+                  ? (item.teacherUrl || item.adminUrl) 
+                  : isStudent 
+                    ? (item.studentUrl || item.teacherUrl || item.adminUrl) 
+                    : item.adminUrl;
+                
                 const isActive =
-                  url === "/admin" || url === "/teacher/dashboard"
+                  ["/admin", "/teacher/dashboard", "/student/dashboard"].includes(url)
                     ? pathname === url
                     : pathname.startsWith(url);
 
