@@ -54,12 +54,14 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(null);
     setAdmin(null);
     qc.clear();
-    navigate("/auth/login", { replace: true });
+    const isTeacher = window.location.pathname.startsWith("/teacher");
+    navigate(isTeacher ? "/teacher/auth/login" : "/admin/auth/login", { replace: true });
   };
 
   useEffect(() => {
-    // Redirect logic: if tokens are present and we're at the login page, go to admin
-    if (token && admin && window.location.pathname === "/auth/login") {
+    // Redirect logic: if tokens are present and we're at a login page, go to admin
+    const loginPaths = ["/admin/auth/login", "/teacher/auth/login", "/auth/login"];
+    if (token && admin && loginPaths.includes(window.location.pathname)) {
       navigate("/admin", { replace: true });
     }
   }, [token, admin, navigate]);

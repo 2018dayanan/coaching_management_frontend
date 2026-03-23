@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { ShieldCheck, Lock, Mail, ArrowRight, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "sonner";
 
 import { useForm } from "react-hook-form";
@@ -197,9 +197,25 @@ const SuperAdminLogin = () => {
             
             <motion.div 
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
+              animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
-              className="mt-8 text-center text-[10px] text-slate-400 uppercase tracking-widest font-bold"
+              className="mt-8 flex flex-col items-center gap-4"
+            >
+              <div className="h-px w-full bg-white/5" />
+              <Link 
+                to="/teacher/auth/login" 
+                className="text-xs text-slate-400 hover:text-white transition-colors flex items-center gap-2 group font-medium"
+              >
+                <ShieldCheck className="h-3 w-3 text-secondary" />
+                Are you a Teacher? <span className="text-secondary group-hover:underline">Login here</span>
+              </Link>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              transition={{ delay: 1 }}
+              className="mt-4 text-center text-[10px] text-slate-500 uppercase tracking-widest font-bold"
             >
               Enterprise Grade Security
             </motion.div>

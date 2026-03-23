@@ -43,6 +43,22 @@ const loginEducationAdmin = async (
 };
 
 /**
+ * POST /teacher/auth/login
+ * Authenticate a teacher
+ */
+const loginEducationTeacher = async (
+  body: AdminLoginBody
+): Promise<AdminLoginResponse> => {
+  const { data } = await api.post<AdminLoginResponse>("/teacher/auth/login", body, {
+    headers: { "Content-Type": "application/json" },
+  });
+  if (data.token) {
+    localStorage.setItem("token", data.token);
+  }
+  return data;
+};
+
+/**
  * GET /admin/auth/profile
  * Fetch the authenticated admin's profile
  */
@@ -51,5 +67,5 @@ const getAdminProfile = async (): Promise<AdminProfile> => {
   return data.data;
 };
 
-export { loginEducationAdmin, getAdminProfile };
+export { loginEducationAdmin, loginEducationTeacher, getAdminProfile };
 

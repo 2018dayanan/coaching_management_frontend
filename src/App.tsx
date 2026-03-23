@@ -12,6 +12,7 @@ import Security from "./pages/admin/Security";
 import Settings from "./pages/admin/Settings";
 import ModelProvider from "./providers/ModelProvider";
 import SuperAdminLogin from "./pages/auth/login";
+import TeacherLogin from "./pages/auth/TeacherLogin";
 import { DashboardLayout } from "./components/layouts/DashboardLayout";
 import { SidebarProvider } from "./components/ui/sidebar";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
@@ -33,6 +34,7 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/admin/auth/login" element={<SuperAdminLogin />} />
+            <Route path="/teacher/auth/login" element={<TeacherLogin />} />
             <Route element={<ProtectedRoute allowedRoles={["admin", "SUPER_ADMIN"]} />}>
               <Route path="/" element={<Navigate to={"/admin"} />} />
               <Route
