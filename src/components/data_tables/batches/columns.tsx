@@ -12,15 +12,51 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useModal } from "@/hooks/use-model-store"
 
 export type Batch = {
   id: string
   name: string
   subject: string
   teacher_name?: string
+  teacher_id?: string
   start_date: string
   end_date: string
   status: "active" | "completed"
+  description?: string
+  enrolled_students?: any[]
+}
+
+const BatchActions = ({ batch }: { batch: Batch }) => {
+  const { onOpen } = useModal()
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-muted rounded-full">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-48 shadow-xl border bg-background backdrop-blur-xl">
+        <DropdownMenuLabel className="text-[10px] uppercase tracking-widest text-muted-foreground opacity-70">Control Panel</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          onClick={() => onOpen("editBatch", { batch })}
+          className="gap-2 focus:bg-secondary focus:text-white transition-colors cursor-pointer rounded-md m-1"
+        >
+          <Pencil className="h-4 w-4" />
+          Edit Batch
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => onOpen("deleteBatch", { batch })}
+          className="text-destructive gap-2 focus:bg-destructive focus:text-white transition-colors cursor-pointer rounded-md m-1"
+        >
+          <Trash className="h-4 w-4" />
+          Archive Batch
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
 }
 
 export const columns: ColumnDef<Batch>[] = [
@@ -84,29 +120,7 @@ export const columns: ColumnDef<Batch>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-muted rounded-full">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48 shadow-xl border-white/5 bg-card/95 backdrop-blur-xl">
-            <DropdownMenuLabel className="text-[10px] uppercase tracking-widest text-muted-foreground opacity-70">Control Panel</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 focus:bg-secondary focus:text-white transition-colors cursor-pointer rounded-md m-1">
-                <Pencil className="h-4 w-4" />
-                Edit Batch
-            </DropdownMenuItem>
-            <DropdownMenuItem className="text-destructive gap-2 focus:bg-destructive focus:text-white transition-colors cursor-pointer rounded-md m-1">
-                <Trash className="h-4 w-4" />
-                Archive Batch
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    cell: ({ row }) => <BatchActions batch={row.original} />,
   },
 ]
+

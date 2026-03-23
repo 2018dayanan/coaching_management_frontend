@@ -10,8 +10,8 @@ export type CreateBatchBody = {
   subject: string;
   description?: string;
   teacher_id: string;
-  start_date: string; 
-  end_date: string;   
+  start_date: string;
+  end_date: string;
   status?: BatchStatus;
   enrolled_students?: string[];
 };
@@ -24,7 +24,8 @@ export type UpdateBatchBody = {
   start_date?: string;
   end_date?: string;
   status?: BatchStatus;
-  enrolled_students?: string[];
+  add_students?: string[];
+  remove_students?: string[];
 };
 
 export type GetAllBatchesParams = {
