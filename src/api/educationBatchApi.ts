@@ -13,6 +13,7 @@ export type CreateBatchBody = {
   start_date: string; 
   end_date: string;   
   status?: BatchStatus;
+  enrolled_students?: string[];
 };
 
 export type UpdateBatchBody = {
@@ -23,6 +24,7 @@ export type UpdateBatchBody = {
   start_date?: string;
   end_date?: string;
   status?: BatchStatus;
+  enrolled_students?: string[];
 };
 
 export type GetAllBatchesParams = {

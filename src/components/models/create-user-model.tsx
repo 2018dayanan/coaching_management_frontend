@@ -76,7 +76,7 @@ export const AddUserDialog = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[500px] gap-6 border-white/10 bg-card/95 backdrop-blur-xl shadow-2xl">
+      <DialogContent className="sm:max-w-[500px] gap-6 border bg-background/95 backdrop-blur-xl shadow-2xl">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Add New User
@@ -92,7 +92,7 @@ export const AddUserDialog = () => {
             <Input 
               {...register("name")} 
               placeholder="e.g. Rahul Sharma" 
-              className="bg-muted/40 border-white/5 focus-visible:ring-primary/40 focus-visible:border-primary transition-all rounded-lg h-10"
+              className="bg-muted/30 border-border/50 focus-visible:ring-primary/40 focus-visible:border-primary transition-all rounded-lg h-10"
               required 
             />
             {errors.name && <p className="text-xs text-rose-500 font-bold tracking-tight">{errors.name.message}</p>}
@@ -105,7 +105,7 @@ export const AddUserDialog = () => {
                 {...register("email")}
                 type="email"
                 placeholder="name@gmail.com"
-                className="bg-muted/40 border-white/5 focus-visible:ring-primary/40 focus-visible:border-primary transition-all rounded-lg h-10"
+                className="bg-muted/30 border-border/50 focus-visible:ring-primary/40 focus-visible:border-primary transition-all rounded-lg h-10"
                 required
               />
               {errors.email && <p className="text-xs text-rose-500 font-bold tracking-tight">{errors.email.message}</p>}
@@ -116,7 +116,7 @@ export const AddUserDialog = () => {
                 {...register("mobile")}
                 type="tel"
                 placeholder="+91 XXXXX XXXXX"
-                className="bg-muted/40 border-white/5 focus-visible:ring-primary/40 focus-visible:border-primary transition-all rounded-lg h-10"
+                className="bg-muted/30 border-border/50 focus-visible:ring-primary/40 focus-visible:border-primary transition-all rounded-lg h-10"
                 required
               />
               {errors.mobile && <p className="text-xs text-rose-500 font-bold tracking-tight">{errors.mobile.message}</p>}
@@ -132,7 +132,7 @@ export const AddUserDialog = () => {
               {...register("password")}
               type="password"
               placeholder="••••••••"
-              className="bg-muted/40 border-white/5 focus-visible:ring-primary/40 focus-visible:border-primary transition-all rounded-lg h-10"
+              className="bg-muted/30 border-border/50 focus-visible:ring-primary/40 focus-visible:border-primary transition-all rounded-lg h-10"
             />
             {errors.password && <p className="text-xs text-rose-500 font-bold tracking-tight">{errors.password.message}</p>}
           </div>
@@ -145,10 +145,10 @@ export const AddUserDialog = () => {
                 control={control}
                 render={({ field }) => (
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <SelectTrigger className="bg-muted/40 border-white/5 focus:ring-primary/40 focus:border-primary transition-all rounded-lg h-10 font-medium">
+                    <SelectTrigger className="bg-muted/30 border-border/50 focus:ring-primary/40 focus:border-primary transition-all rounded-lg h-10 font-medium">
                       <SelectValue placeholder="Select role" />
                     </SelectTrigger>
-                    <SelectContent className="bg-card border-white/10 backdrop-blur-xl">
+                    <SelectContent className="bg-background border shadow-xl backdrop-blur-xl">
                       <SelectItem value="student" className="focus:bg-primary focus:text-white transition-colors cursor-pointer m-1 rounded-md">Student</SelectItem>
                       <SelectItem value="teacher" className="focus:bg-primary focus:text-white transition-colors cursor-pointer m-1 rounded-md">Teacher</SelectItem>
                     </SelectContent>
@@ -164,10 +164,10 @@ export const AddUserDialog = () => {
                 control={control}
                 render={({ field }) => (
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <SelectTrigger className="bg-muted/40 border-white/5 focus:ring-primary/40 focus:border-primary transition-all rounded-lg h-10 font-medium">
+                    <SelectTrigger className="bg-muted/30 border-border/50 focus:ring-primary/40 focus:border-primary transition-all rounded-lg h-10 font-medium">
                       <SelectValue placeholder="Select gender" />
                     </SelectTrigger>
-                    <SelectContent className="bg-card border-white/10 backdrop-blur-xl">
+                    <SelectContent className="bg-background border shadow-xl backdrop-blur-xl">
                       <SelectItem value="male" className="focus:bg-primary focus:text-white transition-colors cursor-pointer m-1 rounded-md">Male</SelectItem>
                       <SelectItem value="female" className="focus:bg-primary focus:text-white transition-colors cursor-pointer m-1 rounded-md">Female</SelectItem>
                       <SelectItem value="other" className="focus:bg-primary focus:text-white transition-colors cursor-pointer m-1 rounded-md">Other</SelectItem>
@@ -184,7 +184,7 @@ export const AddUserDialog = () => {
               type="button" 
               variant="outline" 
               onClick={handleClose}
-              className="border-white/10 hover:bg-muted font-bold transition-all rounded-xl w-full sm:w-auto"
+              className="border-border/60 hover:bg-muted font-bold transition-all rounded-xl w-full sm:w-auto"
             >
               Cancel
             </Button>
