@@ -38,14 +38,39 @@ export type MyStudent = {
 };
 
 export type StudentDetail = {
-  student: any;
-  enrolled_batches: any[];
+  student: {
+    _id: string;
+    name: string;
+    unique_id: string;
+    profile_picture?: string;
+    email?: string;
+    createdAt?: string;
+  };
+  enrolled_batches: {
+    _id: string;
+    name: string;
+    subject: string;
+    start_date: string;
+    end_date: string;
+    status: string;
+  }[];
   tasks_summary: { total: number; submitted: number; pending: number };
   tasks: {
     task_id: string;
     title: string;
+    subject: string;
+    batch_id: string;
+    due_date: string;
+    assigned_date: string;
     is_submitted: boolean;
-    submission?: { marks: number; remark: string; review_status: string };
+    submission?: {
+      submission_id: string;
+      submitted_at: string;
+      submission_text: string;
+      review_status: "pending" | "reviewed";
+      marks?: string;
+      remark?: string;
+    };
   }[];
 };
 

@@ -70,10 +70,22 @@ const TeacherStudentDetail = () => {
   const { student, tasks_summary, tasks, enrolled_batches } = data;
   const currentTask = selectedTaskIdx !== null ? tasks[selectedTaskIdx] : null;
 
+  const handleSelectTask = (idx: number) => {
+    const task = tasks[idx];
+    if (!task.is_submitted || !task.submission) return;
+    
+    setSelectedTaskIdx(idx);
+    setReviewMarks(parseInt(task.submission.marks || "0"));
+    setReviewRemark(task.submission.remark || "");
+  };
+
   const handleSubmitReview = () => {
-    if (!currentTask?.task_id) return;
+    if (!currentTask?.submission?.submission_id) {
+       toast.error("Invalid submission ID");
+       return;
+    }
     reviewMutation.mutate({
-      submissionId: currentTask.task_id, // Documentation says reviewSubmission(submission_id, body)
+      submissionId: currentTask.submission.submission_id,
       body: { marks: reviewMarks, remark: reviewRemark }
     });
   };
@@ -119,11 +131,15 @@ const TeacherStudentDetail = () => {
             <div className="w-full space-y-4 mt-8 pt-6 border-t border-border/40">
               <div className="flex items-center gap-3 text-sm font-medium">
                 <Mail className="h-4 w-4 text-muted-foreground" />
-                <span className="truncate">{student.email}</span>
+                <span className="truncate">{student.email || "No Email Provided"}</span>
               </div>
               <div className="flex items-center gap-3 text-sm font-medium">
                 <Calendar className="h-4 w-4 text-muted-foreground" />
-                <span>Enrolled {new Date(student.createdAt).toLocaleDateString()}</span>
+                <span>
+                  {student.createdAt 
+                    ? `Enrolled ${new Date(student.createdAt).toLocaleDateString()}` 
+                    : `ID: ${student.unique_id}`}
+                </span>
               </div>
             </div>
           </CardContent>
@@ -174,7 +190,7 @@ const TeacherStudentDetail = () => {
                             ? "bg-card hover:border-indigo-400/50 cursor-pointer" 
                             : "bg-muted/10 grayscale opacity-60"
                         } ${selectedTaskIdx === idx ? "border-indigo-500 ring-2 ring-indigo-500/10 shadow-lg" : "border-border/40"}`}
-                        onClick={() => task.is_submitted && setSelectedTaskIdx(idx)}
+                        onClick={() => handleSelectTask(idx)}
                       >
                         <div className="flex items-center gap-4">
                           <div className={`p-3 rounded-xl ${task.is_submitted ? "bg-indigo-500/10 text-indigo-500" : "bg-muted text-muted-foreground"}`}>
@@ -190,7 +206,7 @@ const TeacherStudentDetail = () => {
                               {task.submission?.review_status === "reviewed" && (
                                 <span className="flex items-center gap-1 text-emerald-500 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-full">
                                   <Award className="h-3.5 w-3.5" />
-                                  Graded: {task.submission.marks}%
+                                  Graded: {task.submission.marks}
                                 </span>
                               )}
                             </div>
@@ -210,7 +226,7 @@ const TeacherStudentDetail = () => {
                   </div>
 
                   {/* Review Modal-like section */}
-                  {selectedTaskIdx !== null && currentTask && (
+                  {selectedTaskIdx !== null && currentTask && currentTask.submission && (
                     <div className="mt-8 p-6 bg-indigo-500/5 border border-indigo-500/20 rounded-3xl animate-in zoom-in-95 duration-300">
                        <div className="flex justify-between items-center mb-6">
                          <h3 className="text-xl font-bold flex items-center gap-2 italic uppercase tracking-tight">
@@ -223,25 +239,27 @@ const TeacherStudentDetail = () => {
                        <div className="grid gap-6 md:grid-cols-2">
                           <div className="space-y-4">
                              <div>
-                               <Label className="uppercase text-[10px] font-black text-muted-foreground tracking-widest ml-1 mb-2 block">Submission File</Label>
-                               <div className="p-4 bg-background border border-border/40 rounded-2xl flex items-center justify-between">
-                                 <div className="flex items-center gap-2 text-sm font-medium">
-                                   <FileText className="h-4 w-4 text-indigo-500" />
-                                   submission_file.pdf
+                               <Label className="uppercase text-[10px] font-black text-muted-foreground tracking-widest ml-1 mb-2 block">Submission Content</Label>
+                               <div className="p-4 bg-background border border-border/40 rounded-2xl">
+                                 <p className="text-sm font-medium leading-relaxed bg-muted/30 p-3 rounded-lg border border-border/20 italic">
+                                   "{currentTask.submission.submission_text}"
+                                 </p>
+                                 <div className="flex items-center justify-between mt-4">
+                                   <span className="text-[10px] font-bold text-muted-foreground uppercase">Submitted At: {new Date(currentTask.submission.submitted_at).toLocaleString()}</span>
+                                   <Button variant="ghost" size="sm" className="h-8 gap-1.5 rounded-lg text-indigo-500 hover:text-indigo-600 hover:bg-indigo-500/5">
+                                     <ExternalLink className="h-3.5 w-3.5" />
+                                     View Original
+                                   </Button>
                                  </div>
-                                 <Button variant="ghost" size="sm" className="h-8 gap-1.5 rounded-lg text-indigo-500 hover:text-indigo-600 hover:bg-indigo-500/5">
-                                   <ExternalLink className="h-4 w-4" />
-                                   Open
-                                 </Button>
                                </div>
                              </div>
                              <div>
-                               <Label className="uppercase text-[10px] font-black text-muted-foreground tracking-widest ml-1 mb-2 block">Assign Marks (0-100)</Label>
+                               <Label className="uppercase text-[10px] font-black text-muted-foreground tracking-widest ml-1 mb-2 block">Assign Marks</Label>
                                <Input 
-                                 type="number" 
+                                 type="text" 
                                  value={reviewMarks} 
-                                 onChange={(e) => setReviewMarks(parseInt(e.target.value))}
-                                 placeholder="e.g. 85" 
+                                 onChange={(e) => setReviewMarks(parseInt(e.target.value) || 0)}
+                                 placeholder="e.g. 8" 
                                  className="rounded-xl h-12 bg-background/50"
                                />
                              </div>
@@ -253,15 +271,15 @@ const TeacherStudentDetail = () => {
                                  value={reviewRemark}
                                  onChange={(e) => setReviewRemark(e.target.value)}
                                  placeholder="Provide guidance to the student..." 
-                                 className="rounded-2xl min-h-[120px] bg-background/50 pt-4"
+                                 className="rounded-2xl min-h-[140px] bg-background/50 pt-4"
                                />
                              </div>
                              <Button 
-                               onClick={handleSubmitReview}
-                               disabled={reviewMutation.isPending}
-                               className="w-full h-12 rounded-xl bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-600/20 font-bold"
+                                onClick={handleSubmitReview}
+                                disabled={reviewMutation.isPending}
+                                className="w-full h-12 rounded-xl bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-600/20 font-bold uppercase italic tracking-tighter"
                              >
-                               {reviewMutation.isPending ? "Submitting..." : "Submit Review"}
+                               {reviewMutation.isPending ? "Syncing..." : "Submit Student Grade"}
                              </Button>
                           </div>
                        </div>
@@ -271,18 +289,21 @@ const TeacherStudentDetail = () => {
 
                 <TabsContent value="batches" className="pt-2">
                    <div className="grid gap-4 mt-2">
-                     {enrolled_batches.map((eb, idx) => (
+                     {enrolled_batches.map((eb: any, idx: number) => (
                        <div key={idx} className="p-4 bg-muted/20 border border-border/40 rounded-2xl flex items-center justify-between">
                           <div className="flex items-center gap-4">
                              <div className="h-10 w-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
                                <Calendar className="h-5 w-5 text-emerald-500" />
                              </div>
                              <div>
-                               <div className="font-bold text-sm uppercase italic tracking-tight">{eb.batch?.name || "N/A"}</div>
-                               <div className="text-xs text-muted-foreground font-medium">{eb.batch?.subject || "No Subject"}</div>
+                               <div className="font-bold text-sm uppercase italic tracking-tight">{eb.name || "N/A"}</div>
+                               <div className="text-xs text-muted-foreground font-medium">{eb.subject || "No Subject"}</div>
                              </div>
                           </div>
-                          <Badge variant="outline" className="text-[10px] border-emerald-500/20 text-emerald-600 bg-emerald-500/5">Active Enrollment</Badge>
+                          <div className="flex items-center gap-4">
+                            <span className="text-[10px] font-bold text-muted-foreground uppercase hidden sm:block">Starts: {new Date(eb.start_date).toLocaleDateString()}</span>
+                            <Badge variant="outline" className="text-[10px] border-emerald-500/20 text-emerald-600 bg-emerald-500/5 px-3 py-1 rounded-lg">Active</Badge>
+                          </div>
                        </div>
                      ))}
                    </div>
