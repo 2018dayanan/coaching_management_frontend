@@ -2,6 +2,10 @@
 
 A comprehensive coaching and education management system built with React, TypeScript, and Vite. This platform provides a robust administrative interface for managing students, teachers, classes, batches, and academic performance.
 
+## Live
+
+Frontend: https://coaching.tokenwala.online/
+
 ## Features
 
 ### Multi-Role Support
@@ -55,6 +59,13 @@ src/
    ```bash
    npm install
    ```
+
+### Environment Variables
+Create a `.env` file in the project root:
+
+```bash
+VITE_API_URL=http://localhost:3025
+```
 
 ### Development
 Run the development server:
