@@ -20,7 +20,7 @@ import { useModal } from "@/hooks/use-model-store";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateUserSchema, type UpdateUserFormValues } from "@/validators/user.schema";
-import { updateEducationUser } from "@/api/educationUserApi";
+import { updateEducationUser, updateEducationUserStatus } from "@/api/educationUserApi";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
@@ -46,9 +46,10 @@ export const EditUserDialog = () => {
 
   useEffect(() => {
     if (user) {
+      const mobileVal = user.phone || user.mobile;
       reset({
         name: user.name,
-        mobile: user.phone || user.mobile,
+        mobile: mobileVal === "N/A" ? "" : (mobileVal || ""),
         role: user.role,
         gender: user.gender,
         status: user.status,
@@ -61,14 +62,27 @@ export const EditUserDialog = () => {
     
     setIsPending(true);
     try {
-      const response = await updateEducationUser(user.id, values);
+      // 1. Update general user info
+      const updatePromise = updateEducationUser(user.id, {
+        name: values.name,
+        mobile: values.mobile,
+        role: values.role,
+        gender: values.gender,
+      });
 
-      if (response) {
-        toast.success("User updated successfully!");
-        queryClient.invalidateQueries({ queryKey: ["education-users"] });
-        queryClient.invalidateQueries({ queryKey: ["education-user", user.id] });
-        onClose();
+      // 2. Update status if it has changed
+      let statusPromise = Promise.resolve();
+      if (values.status && values.status !== user.status) {
+        statusPromise = updateEducationUserStatus(user.id, values.status as any);
       }
+
+      await Promise.all([updatePromise, statusPromise]);
+
+      toast.success("Profile updated successfully!");
+      queryClient.invalidateQueries({ queryKey: ["education-users"] });
+      queryClient.invalidateQueries({ queryKey: ["education-teachers"] });
+      queryClient.invalidateQueries({ queryKey: ["education-user", user.id] });
+      onClose();
     } catch (error: any) {
       console.error("Update User Error:", error);
       toast.error(error.response?.data?.message || "Failed to update user.");
@@ -77,19 +91,24 @@ export const EditUserDialog = () => {
     }
   };
 
+  const onFormError = (errs: any) => {
+    console.error("Edit User Form Error:", errs);
+    toast.error("Please check the form for errors.");
+  };
+
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[500px] gap-6 border bg-background/95 backdrop-blur-xl shadow-2xl">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Edit User Profile
+            Edit Profile
           </DialogTitle>
           <DialogDescription className="text-muted-foreground font-medium">
             Update the information for {user?.name || "this user"}.
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 py-2">
+        <form onSubmit={handleSubmit(onSubmit, onFormError)} className="space-y-5 py-2">
           <div className="space-y-2">
             <Label className="text-xs font-bold uppercase tracking-widest text-muted-foreground opacity-70">Full Name</Label>
             <Input 

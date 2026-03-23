@@ -19,6 +19,7 @@ import AuthProvider from "./providers/AuthProvider";
 import UserDetail from "./pages/admin/users/user_profile";
 import AdminProfile from "./pages/admin/AdminProfile";
 import ClassDetail from "./pages/admin/ClassDetail";
+import Teachers from "./pages/admin/Teachers";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => (
                 <Route index element={<Index />} />
                 <Route path="users" element={<Users />} />
                 <Route path="users/:id" element={<UserDetail />} />
+                <Route path="teachers" element={<Teachers />} />
                 <Route path="batches" element={<Batches />} />
                 <Route path="classes" element={<Classes />} />
                 <Route path="classes/:id" element={<ClassDetail />} />

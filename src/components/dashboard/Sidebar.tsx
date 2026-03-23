@@ -25,7 +25,8 @@ import { NavLink, useLocation } from "react-router-dom";
 
 const menuItems = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard, accent: "blue" },
-  { title: "User Management", url: "/admin/users", icon: Users, accent: "indigo" },
+  { title: "Student Management", url: "/admin/users", icon: Users, accent: "indigo" },
+  { title: "Teacher Management", url: "/admin/teachers", icon: Users, accent: "indigo" },
   { title: "Batch Management", url: "/admin/batches", icon: BookOpen, accent: "emerald" },
   { title: "Class Management", url: "/admin/classes", icon: Video, accent: "blue" },
   { title: "Security", url: "/admin/security", icon: Shield, accent: "indigo" },
@@ -36,7 +37,7 @@ const menuItems = [
 export default function AppSidebar() {
   const { pathname } = useLocation();
   const { open, isMobile } = useSidebar();
-  
+
   return (
     <Sidebar
       collapsible="icon"
@@ -92,7 +93,7 @@ export default function AppSidebar() {
                         {isActive && (
                           <div className="absolute left-0 top-1/4 bottom-1/4 w-1 bg-white rounded-full" />
                         )}
-                        
+
                         <item.icon className={cn(
                           "w-5 h-5 shrink-0 transition-transform group-hover:scale-110",
                           isActive ? "text-white" : cn(
@@ -101,7 +102,7 @@ export default function AppSidebar() {
                             item.accent === "emerald" && "text-emerald-500"
                           )
                         )} />
-                        
+
                         {(open || isMobile) && (
                           <span className="truncate tracking-tight">{item.title}</span>
                         )}
