@@ -29,6 +29,13 @@ import TeacherClassList from "./pages/teacher/classes/ClassList";
 import LandingPage from "./pages/home/LandingPage";
 import StudentLogin from "./pages/auth/StudentLogin";
 import StudentDashboard from "./pages/student/Dashboard";
+import StudentProfilePage from "./pages/student/Profile";
+import StudentCoursesPage from "./pages/student/Courses";
+import StudentTaskListPage from "./pages/student/Tasks/TaskList";
+import StudentTaskDetailPage from "./pages/student/Tasks/TaskDetail";
+import StudentAcademicPage from "./pages/student/AcademicDetails";
+import StudentGuardianPage from "./pages/student/GuardianDetails";
+import StudentNotificationsPage from "./pages/student/Notifications";
 
 const queryClient = new QueryClient();
 
@@ -104,7 +111,13 @@ const App = () => (
                 }
               >
                 <Route index element={<StudentDashboard />} />
-                <Route path="profile" element={<AdminProfile />} />
+                <Route path="profile" element={<StudentProfilePage />} />
+                <Route path="courses" element={<StudentCoursesPage />} />
+                <Route path="tasks" element={<StudentTaskListPage />} />
+                <Route path="tasks/:id" element={<StudentTaskDetailPage />} />
+                <Route path="academic" element={<StudentAcademicPage />} />
+                <Route path="guardian" element={<StudentGuardianPage />} />
+                <Route path="notifications" element={<StudentNotificationsPage />} />
               </Route>
             </Route>
           </Routes>

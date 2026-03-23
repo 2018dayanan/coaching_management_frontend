@@ -20,6 +20,7 @@ import {
   Shield,
   UserCircle,
   ListChecks,
+  GraduationCap,
 } from "lucide-react";
 
 import { NavLink, useLocation } from "react-router-dom";
@@ -27,14 +28,17 @@ import { useAuth } from "@/providers/AuthProvider";
 
 const menuItems = [
   { title: "Dashboard", adminUrl: "/admin", teacherUrl: "/teacher/dashboard", studentUrl: "/student/dashboard", icon: LayoutDashboard, accent: "blue", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER", "STUDENT"] },
+  { title: "My Profile", adminUrl: "/admin/profile", teacherUrl: "/teacher/dashboard/profile", studentUrl: "/student/dashboard/profile", icon: UserCircle, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER", "STUDENT"] },
   { title: "Student Management", adminUrl: "/admin/users", teacherUrl: "/teacher/dashboard/students", icon: Users, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
   { title: "Teacher Management", adminUrl: "/admin/teachers", icon: Users, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN"] },
-  { title: "Batch Management", adminUrl: "/admin/batches", teacherUrl: "/teacher/dashboard/batches", icon: BookOpen, accent: "emerald", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
+  { title: "My Courses", adminUrl: "/admin/batches", teacherUrl: "/teacher/dashboard/batches", studentUrl: "/student/dashboard/courses", icon: BookOpen, accent: "emerald", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER", "STUDENT"] },
   { title: "Class Management", adminUrl: "/admin/classes", teacherUrl: "/teacher/dashboard/classes", icon: Video, accent: "blue", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER"] },
-  { title: "Task Management", adminUrl: "/admin/tasks", teacherUrl: "/teacher/dashboard/tasks", icon: ListChecks, accent: "indigo", roles: ["TEACHER"] },
+  { title: "Tasks & Assignments", adminUrl: "/admin/tasks", teacherUrl: "/teacher/dashboard/tasks", studentUrl: "/student/dashboard/tasks", icon: ListChecks, accent: "indigo", roles: ["TEACHER", "STUDENT"] },
+  { title: "Academic Background", studentUrl: "/student/dashboard/academic", icon: GraduationCap, accent: "emerald", roles: ["STUDENT"] },
+  { title: "Guardian Details", studentUrl: "/student/dashboard/guardian", icon: Users, accent: "blue", roles: ["STUDENT"] },
+  { title: "Notifications", studentUrl: "/student/dashboard/notifications", icon: Shield, accent: "amber", roles: ["STUDENT"] },
   { title: "Security", adminUrl: "/admin/security", icon: Shield, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN"] },
   { title: "Settings", adminUrl: "/admin/settings", icon: Settings, accent: "blue", roles: ["ADMIN", "SUPER_ADMIN"] },
-  { title: "Profile", adminUrl: "/admin/profile", teacherUrl: "/teacher/dashboard/profile", studentUrl: "/student/dashboard/profile", icon: UserCircle, accent: "indigo", roles: ["ADMIN", "SUPER_ADMIN", "TEACHER", "STUDENT"] },
 ];
 
 export default function AppSidebar() {
@@ -84,16 +88,16 @@ export default function AppSidebar() {
                 const userRole = admin?.role?.toUpperCase();
                 const isTeacher = userRole === "TEACHER";
                 const isStudent = userRole === "STUDENT";
-                const url = isTeacher 
+                const url = (isTeacher 
                   ? (item.teacherUrl || item.adminUrl) 
                   : isStudent 
                     ? (item.studentUrl || item.teacherUrl || item.adminUrl) 
-                    : item.adminUrl;
+                    : item.adminUrl) || "#";
                 
                 const isActive =
                   ["/admin", "/teacher/dashboard", "/student/dashboard"].includes(url)
                     ? pathname === url
-                    : pathname.startsWith(url);
+                    : url !== "#" && pathname.startsWith(url);
 
                 return (
                   <SidebarMenuItem key={item.title}>
