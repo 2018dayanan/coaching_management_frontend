@@ -56,8 +56,16 @@ const TeacherStudentDetail = () => {
     }
   });
 
-  if (isLoading) return <div className="p-12 text-center animate-pulse">Loading student profile...</div>;
-  if (error || !data) return <div className="p-12 text-center text-destructive">Student session not found.</div>;
+  if (isLoading) return <div className="p-12 text-center animate-pulse font-medium text-primary">Syncing student profile from server...</div>;
+  if (error || !data || !data.student) return (
+    <div className="p-12 text-center space-y-4">
+      <div className="bg-destructive/10 p-8 rounded-3xl border border-destructive/20 inline-block max-w-md">
+        <h3 className="text-xl font-bold text-destructive mb-2 uppercase italic tracking-tight">Data Sync Error</h3>
+        <p className="text-sm text-muted-foreground font-medium">We couldn't retrieve the full student profile. Some academic records might be missing or inaccessible.</p>
+        <Button variant="ghost" className="mt-4 font-bold text-destructive" onClick={() => navigate("/teacher/dashboard/students")}>Back to Directory</Button>
+      </div>
+    </div>
+  );
 
   const { student, tasks_summary, tasks, enrolled_batches } = data;
   const currentTask = selectedTaskIdx !== null ? tasks[selectedTaskIdx] : null;
@@ -270,8 +278,8 @@ const TeacherStudentDetail = () => {
                                <Calendar className="h-5 w-5 text-emerald-500" />
                              </div>
                              <div>
-                               <div className="font-bold text-sm uppercase italic tracking-tight">{eb.batch.name}</div>
-                               <div className="text-xs text-muted-foreground font-medium">{eb.batch.subject}</div>
+                               <div className="font-bold text-sm uppercase italic tracking-tight">{eb.batch?.name || "N/A"}</div>
+                               <div className="text-xs text-muted-foreground font-medium">{eb.batch?.subject || "No Subject"}</div>
                              </div>
                           </div>
                           <Badge variant="outline" className="text-[10px] border-emerald-500/20 text-emerald-600 bg-emerald-500/5">Active Enrollment</Badge>

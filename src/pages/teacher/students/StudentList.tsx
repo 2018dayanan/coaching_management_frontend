@@ -22,11 +22,11 @@ const StudentList = () => {
   });
 
   const studentTableData: TeacherStudent[] = useMemo(() => {
-    const studentsData = data || [];
+    const studentsData = (data as any) || [];
     return studentsData
       .filter((s: any) =>
-        s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        s.unique_id.toLowerCase().includes(searchTerm.toLowerCase())
+        (s.name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (s.unique_id || "").toLowerCase().includes(searchTerm.toLowerCase())
       )
       .map((student: any) => ({
         id: student._id,
