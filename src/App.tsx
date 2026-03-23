@@ -26,6 +26,7 @@ import TeacherStudentDetail from "./pages/teacher/students/StudentDetail";
 import TaskManagement from "./pages/teacher/tasks/TaskManagement";
 import TeacherBatchList from "./pages/teacher/batches/BatchList";
 import TeacherClassList from "./pages/teacher/classes/ClassList";
+import LandingPage from "./pages/home/LandingPage";
 
 const queryClient = new QueryClient();
 
@@ -40,7 +41,7 @@ const App = () => (
             <Route path="/admin/auth/login" element={<SuperAdminLogin />} />
             <Route path="/auth/login" element={<TeacherLogin />} />
             <Route path="/teacher/auth/login" element={<TeacherLogin />} />
-            <Route path="/" element={<Navigate to="/admin" replace />} />
+            <Route path="/" element={<LandingPage />} />
             <Route element={<ProtectedRoute allowedRoles={["ADMIN", "SUPER_ADMIN"]} />}>
               <Route
                 path="/admin"
