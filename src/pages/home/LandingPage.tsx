@@ -3,9 +3,11 @@ import HomeHero from "@/components/home/HomeHero";
 import HomePrograms from "@/components/home/HomePrograms";
 import HomeStats from "@/components/home/HomeStats";
 import HomeFeatures from "@/components/home/HomeFeatures";
+import HomeWhyEduVW from "@/components/home/HomeWhyEduVW";
 import HomeHowItWorks from "@/components/home/HomeHowItWorks";
 import HomeTeam from "@/components/home/HomeTeam";
 import HomeTestimonials from "@/components/home/HomeTestimonials";
+import HomePricing from "@/components/home/HomePricing";
 import HomeFAQ from "@/components/home/HomeFAQ";
 import HomeFooter from "@/components/home/HomeFooter";
 
@@ -28,6 +30,9 @@ const LandingPage = () => {
         {/* Features Section */}
         <HomeFeatures />
 
+        {/* Why EduVW Section */}
+        <HomeWhyEduVW />
+
         {/* How It Works Section */}
         <HomeHowItWorks />
 
@@ -36,6 +41,9 @@ const LandingPage = () => {
 
         {/* Testimonials Section */}
         <HomeTestimonials />
+
+        {/* Pricing Section */}
+        <HomePricing />
 
         {/* FAQ Section */}
         <HomeFAQ />
@@ -52,10 +60,10 @@ const LandingPage = () => {
           }} />
           <div className="container mx-auto px-6 relative z-10 text-center text-white space-y-8">
             <h2 className="text-4xl md:text-6xl font-bold tracking-tight uppercase">
-              Ready to <span className="text-amber-400">Transform</span> Your Learning?
+              Ready to <span className="text-amber-400">Transform</span> Your Coaching Institute?
             </h2>
             <p className="text-xl font-normal text-white/80 max-w-2xl mx-auto">
-              Join thousands of students who have already accelerated their academic and professional growth with our advanced methodology. Your journey to excellence starts here.
+              Join 500+ coaching institutes across India who have streamlined their operations with EduVW. Start your free trial today.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
               <a href="/auth/login">
@@ -63,9 +71,9 @@ const LandingPage = () => {
                   Start Free Trial
                 </button>
               </a>
-              <a href="#programs">
+              <a href="#pricing">
                 <button className="px-10 py-5 bg-white/10 backdrop-blur-sm text-white rounded-2xl font-semibold tracking-tight hover:bg-white/20 transition-all border border-white/20">
-                  Explore Programs
+                  View Pricing
                 </button>
               </a>
             </div>

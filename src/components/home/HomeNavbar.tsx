@@ -30,9 +30,9 @@ const HomeNavbar = () => {
 
   const navLinks = [
     { name: "Programs", href: "#programs" },
-    { name: "Methodology", href: "#methodology" },
+    { name: "Why EduVW", href: "#why-eduvw" },
+    { name: "Pricing", href: "#pricing" },
     { name: "Success Stories", href: "#success" },
-    { name: "About", href: "#about" },
   ];
 
   return (
