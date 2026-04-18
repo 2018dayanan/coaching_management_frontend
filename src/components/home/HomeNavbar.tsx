@@ -51,7 +51,7 @@ const HomeNavbar = () => {
             <GraduationCap className="h-6 w-6 text-white" />
           </div>
           <span className="text-xl font-bold tracking-tight">
-            EDU<span className="text-indigo-600">GATE</span>
+            EDU<span className="text-indigo-600">VW</span>
           </span>
         </Link>
 

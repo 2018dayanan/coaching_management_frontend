@@ -1,4 +1,4 @@
-# Coaching Management System
+# EduVW - Coaching Management System
 
 A comprehensive coaching and education management system built with React, TypeScript, and Vite. This platform provides a robust administrative interface for managing students, teachers, classes, batches, and academic performance.
 

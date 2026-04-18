@@ -72,7 +72,7 @@ const HomeFooter = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-indigo-600 flex-shrink-0" />
-                <span>hello@edugate.com</span>
+                <span>hello@eduvw.com</span>
               </li>
             </ul>
           </div>
@@ -80,7 +80,7 @@ const HomeFooter = () => {
 
         <div className="pt-10 border-t border-border/40 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-xs font-medium text-muted-foreground tracking-wide">
-            © 2026 EduGate Coaching Systems. All rights reserved.
+            © 2026 EduVW Coaching Systems. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground transition-all flex items-center gap-2">

@@ -4,11 +4,11 @@ import { ChevronDown, HelpCircle } from "lucide-react";
 
 const faqs = [
   {
-    question: "What programs does EduGate offer?",
+    question: "What programs does EduVW offer?",
     answer: "We offer comprehensive coaching for Classes 6-12 covering Foundation Courses, Entrance Excellence (JEE/NEET), Olympiad Training, and Skill Development programs. Each program is designed by expert educators to maximize student potential."
   },
   {
-    question: "How can I enroll my child at EduGate?",
+    question: "How can I enroll my child at EduVW?",
     answer: "Simply click on 'Get Started' and register for a free diagnostic assessment. Based on the results, our counselors will recommend the most suitable program. You can also visit our center for a personalized consultation."
   },
   {

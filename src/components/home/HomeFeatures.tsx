@@ -58,7 +58,7 @@ const HomeFeatures = () => {
             viewport={{ once: true }}
             className="text-indigo-600 font-semibold tracking-wider text-xs"
           >
-            Why Choose EduGate?
+            Why Choose EduVW?
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}

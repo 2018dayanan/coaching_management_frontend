@@ -6,7 +6,7 @@ const testimonials = [
     name: "Priya Sharma",
     role: "NEET Aspirant 2025",
     image: "PS",
-    content: "EduGate transformed my approach to biology. The structured methodology and doubt-clearing sessions helped me score 650+ in NEET. Forever grateful!",
+    content: "EduVW transformed my approach to biology. The structured methodology and doubt-clearing sessions helped me score 650+ in NEET. Forever grateful!",
     rating: 5,
     program: "Entrance Excellence"
   },
@@ -14,7 +14,7 @@ const testimonials = [
     name: "Rahul Verma",
     role: "JEE Advanced 2025",
     image: "RV",
-    content: "The faculty here understands exactly what IIT expects. My rank improved from 15K to under 5K in just one year of preparation with EduGate.",
+    content: "The faculty here understands exactly what IIT expects. My rank improved from 15K to under 5K in just one year of preparation with EduVW.",
     rating: 5,
     program: "Entrance Excellence"
   },
@@ -30,7 +30,7 @@ const testimonials = [
     name: "Vikram Singh",
     role: "NTSE Scholar 2025",
     image: "VS",
-    content: "The olympiad training at EduGate is exceptional. I cleared NTSE and also won a silver medal in the National Science Olympiad.",
+    content: "The olympiad training at EduVW is exceptional. I cleared NTSE and also won a silver medal in the National Science Olympiad.",
     rating: 5,
     program: "Olympiad Training"
   },
@@ -38,7 +38,7 @@ const testimonials = [
     name: "Meera Iyer",
     role: "Board Topper 2025",
     image: "MI",
-    content: "Scoring 98% in boards seemed impossible until I joined EduGate. Their revision methodology and regular assessments made all the difference.",
+    content: "Scoring 98% in boards seemed impossible until I joined EduVW. Their revision methodology and regular assessments made all the difference.",
     rating: 5,
     program: "Foundation Courses"
   },
@@ -72,7 +72,7 @@ const HomeTestimonials = () => {
             HEAR FROM OUR <span className="text-indigo-600">CHAMPIONS</span>
           </h2>
           <p className="text-muted-foreground font-normal text-lg">
-            Real stories from real students who transformed their academic journey with EduGate.
+            Real stories from real students who transformed their academic journey with EduVW.
           </p>
         </motion.div>
 
