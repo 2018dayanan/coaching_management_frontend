@@ -64,14 +64,14 @@ const HomeTestimonials = () => {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-16 space-y-4"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 rounded-full text-amber-600 text-xs font-bold uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 rounded-full text-amber-600 text-xs font-semibold tracking-wider">
             <Star className="h-4 w-4 fill-amber-500 text-amber-500" />
             Success Stories
           </div>
-          <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter uppercase leading-none">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight uppercase leading-none">
             HEAR FROM OUR <span className="text-indigo-600">CHAMPIONS</span>
           </h2>
-          <p className="text-muted-foreground font-medium text-lg">
+          <p className="text-muted-foreground font-normal text-lg">
             Real stories from real students who transformed their academic journey with EduGate.
           </p>
         </motion.div>
@@ -100,22 +100,22 @@ const HomeTestimonials = () => {
               </div>
 
               {/* Content */}
-              <p className="text-muted-foreground font-medium text-sm leading-relaxed mb-6 relative z-10">
+              <p className="text-muted-foreground font-normal text-sm leading-relaxed mb-6 relative z-10">
                 "{testimonial.content}"
               </p>
 
               {/* Program badge */}
-              <div className="inline-block px-3 py-1 bg-indigo-500/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-indigo-600 mb-6">
+              <div className="inline-block px-3 py-1 bg-indigo-500/10 rounded-full text-[10px] font-semibold tracking-wider text-indigo-600 mb-6">
                 {testimonial.program}
               </div>
 
               {/* Author */}
               <div className="flex items-center gap-4 pt-6 border-t border-border/40">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-black italic">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold">
                   {testimonial.image}
                 </div>
                 <div>
-                  <div className="font-bold italic uppercase tracking-tighter">
+                  <div className="font-semibold tracking-tight">
                     {testimonial.name}
                   </div>
                   <div className="text-xs font-medium text-muted-foreground">

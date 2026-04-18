@@ -62,14 +62,14 @@ const HomeStats = () => {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-16 space-y-4"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 text-xs font-bold uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 text-xs font-semibold tracking-wider">
             <Trophy className="h-4 w-4" />
             Our Achievements
           </div>
-          <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter uppercase text-white leading-none">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight uppercase text-white leading-none">
             NUMBERS THAT <span className="text-amber-400">SPEAK</span>
           </h2>
-          <p className="text-white/80 font-medium text-lg">
+          <p className="text-white/80 font-normal text-lg">
             A decade of excellence reflected in every milestone we achieve alongside our students.
           </p>
         </motion.div>
@@ -88,10 +88,10 @@ const HomeStats = () => {
                 {stat.icon}
               </div>
               <div>
-                <div className="text-3xl md:text-4xl font-black italic tracking-tighter text-white">
+                <div className="text-3xl md:text-4xl font-bold tracking-tight text-white">
                   {stat.value}
                 </div>
-                <div className="text-sm font-bold uppercase tracking-widest text-white/80 mt-1">
+                <div className="text-sm font-semibold tracking-wide text-white/80 mt-1">
                   {stat.label}
                 </div>
                 <div className="text-xs text-white/60 mt-1">

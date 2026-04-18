@@ -39,8 +39,8 @@ const HomeNavbar = () => {
           <div className="bg-indigo-600 p-2 rounded-xl group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-indigo-600/20">
             <GraduationCap className="h-6 w-6 text-white" />
           </div>
-          <span className="text-xl font-black italic uppercase tracking-tighter">
-            EDU<span className="text-indigo-600 not-italic">GATE</span>
+          <span className="text-xl font-bold tracking-tight">
+            EDU<span className="text-indigo-600">GATE</span>
           </span>
         </Link>
 
@@ -50,7 +50,7 @@ const HomeNavbar = () => {
             <a
               key={link.name}
               href={link.href}
-              className="text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-indigo-600 transition-colors"
+              className="text-sm font-semibold tracking-wide text-muted-foreground hover:text-indigo-600 transition-colors"
             >
               {link.name}
             </a>
@@ -62,13 +62,13 @@ const HomeNavbar = () => {
           <Link to="/auth/login">
             <Button
               variant="ghost"
-              className="font-bold uppercase tracking-widest text-[10px] hover:bg-muted"
+              className="font-semibold tracking-wide text-[10px] hover:bg-muted"
             >
               Portal Login
             </Button>
           </Link>
           <Link to="/auth/login">
-            <Button className="bg-indigo-600 hover:bg-indigo-700 rounded-xl px-6 font-bold uppercase italic tracking-tighter shadow-lg shadow-indigo-600/20 group">
+            <Button className="bg-indigo-600 hover:bg-indigo-700 rounded-xl px-6 font-semibold tracking-wide shadow-lg shadow-indigo-600/20 group">
               Get Started
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Button>
@@ -99,7 +99,7 @@ const HomeNavbar = () => {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-lg font-bold uppercase tracking-tighter italic"
+                  className="text-lg font-semibold tracking-tight"
                 >
                   {link.name}
                 </a>
@@ -109,7 +109,7 @@ const HomeNavbar = () => {
                   to="/auth/login"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <Button variant="outline" className="w-full rounded-xl py-6 font-bold uppercase italic tracking-tighter">
+                  <Button variant="outline" className="w-full rounded-xl py-6 font-semibold tracking-tight">
                     Portal Login
                   </Button>
                 </Link>
@@ -117,7 +117,7 @@ const HomeNavbar = () => {
                   to="/auth/login"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <Button className="w-full rounded-xl py-6 bg-indigo-600 font-bold uppercase italic tracking-tighter shadow-xl shadow-indigo-600/20">
+                  <Button className="w-full rounded-xl py-6 bg-indigo-600 font-semibold tracking-tight shadow-xl shadow-indigo-600/20">
                     Get Started Now
                   </Button>
                 </Link>

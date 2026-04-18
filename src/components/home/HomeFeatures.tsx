@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { 
-  Video, 
-  Users, 
-  Target, 
-  Zap, 
-  ShieldCheck, 
-  Trophy 
+import {
+  Video,
+  Users,
+  Target,
+  Zap,
+  ShieldCheck,
+  Trophy
 } from "lucide-react";
 
 const features = [
@@ -56,7 +56,7 @@ const HomeFeatures = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="text-indigo-600 font-bold uppercase tracking-widest text-xs"
+            className="text-indigo-600 font-semibold tracking-wider text-xs"
           >
             Why Choose EduGate?
           </motion.div>
@@ -64,7 +64,7 @@ const HomeFeatures = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-black italic tracking-tighter uppercase leading-none"
+            className="text-4xl md:text-6xl font-bold tracking-tight uppercase leading-none"
           >
             ENGINEERED FOR <span className="text-indigo-600">EXCELLENCE</span>
           </motion.h2>
@@ -73,7 +73,7 @@ const HomeFeatures = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-muted-foreground font-medium text-lg"
+            className="text-muted-foreground font-normal text-lg"
           >
             We don't just teach modules; we build futures. Our ecosystem is designed to provide the most immersive coaching experience possible.
           </motion.p>
@@ -105,10 +105,10 @@ const HomeFeatures = () => {
                 {feature.icon}
               </div>
 
-              <h3 className="text-xl font-bold italic uppercase tracking-tighter mb-3 group-hover:text-indigo-600 transition-colors">
+              <h3 className="text-xl font-semibold tracking-tight mb-3 group-hover:text-indigo-600 transition-colors">
                 {feature.title}
               </h3>
-              <p className="text-muted-foreground font-medium text-sm leading-relaxed">
+              <p className="text-muted-foreground font-normal text-sm leading-relaxed">
                 {feature.description}
               </p>
             </motion.div>

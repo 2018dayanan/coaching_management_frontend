@@ -58,14 +58,14 @@ const HomePrograms = () => {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-16 space-y-4"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 rounded-full text-indigo-600 text-xs font-bold uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 rounded-full text-indigo-600 text-xs font-semibold tracking-wider">
             <BookOpen className="h-4 w-4" />
             Our Programs
           </div>
-          <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter uppercase leading-none">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight uppercase leading-none">
             COURSES DESIGNED FOR <span className="text-indigo-600">SUCCESS</span>
           </h2>
-          <p className="text-muted-foreground font-medium text-lg">
+          <p className="text-muted-foreground font-normal text-lg">
             Choose from our range of expertly crafted programs tailored to meet every student's unique learning needs and career aspirations.
           </p>
         </motion.div>
@@ -79,10 +79,10 @@ const HomePrograms = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ y: -8 }}
-              className={`relative p-8 rounded-[2rem] bg-card border border-border/40 hover:border-${program.color === 'indigo' ? 'indigo' : program.color === 'emerald' ? 'emerald' : program.color === 'amber' ? 'amber' : 'violet'}-500/30 transition-all group overflow-hidden`}
+              className="relative p-8 rounded-[2rem] bg-card border border-border/40 hover:border-indigo-500/30 transition-all group overflow-hidden"
             >
               {/* Gradient background on hover */}
-              <div className={`absolute inset-0 bg-gradient-to-br from-${program.color === 'indigo' ? 'indigo' : program.color === 'emerald' ? 'emerald' : program.color === 'amber' ? 'amber' : 'violet'}-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity`} />
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
               {/* Icon */}
               <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 ${
@@ -95,20 +95,20 @@ const HomePrograms = () => {
               </div>
 
               {/* Level badge */}
-              <div className="inline-block px-3 py-1 bg-muted rounded-full text-[10px] font-bold uppercase tracking-widest text-muted-foreground mb-4">
+              <div className="inline-block px-3 py-1 bg-muted rounded-full text-[10px] font-semibold tracking-wider text-muted-foreground mb-4">
                 {program.level}
               </div>
 
-              <h3 className="text-xl font-black italic uppercase tracking-tighter mb-3 group-hover:text-indigo-600 transition-colors">
+              <h3 className="text-xl font-semibold tracking-tight mb-3 group-hover:text-indigo-600 transition-colors">
                 {program.title}
               </h3>
 
-              <p className="text-muted-foreground font-medium text-sm leading-relaxed mb-6">
+              <p className="text-muted-foreground font-normal text-sm leading-relaxed mb-6">
                 {program.description}
               </p>
 
               {/* Stats */}
-              <div className="flex items-center gap-4 mb-6 text-xs font-bold text-muted-foreground">
+              <div className="flex items-center gap-4 mb-6 text-xs font-medium text-muted-foreground">
                 <div className="flex items-center gap-1">
                   <Users className="h-3 w-3" />
                   <span>{program.students}</span>
@@ -123,7 +123,12 @@ const HomePrograms = () => {
               <div className="space-y-2">
                 {program.features.map((feature) => (
                   <div key={feature} className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-                    <div className={`w-1.5 h-1.5 rounded-full bg-${program.color === 'indigo' ? 'indigo' : program.color === 'emerald' ? 'emerald' : program.color === 'amber' ? 'amber' : 'violet'}-500`} />
+                    <div className={`w-1.5 h-1.5 rounded-full ${
+                      program.color === 'indigo' ? 'bg-indigo-500' :
+                      program.color === 'emerald' ? 'bg-emerald-500' :
+                      program.color === 'amber' ? 'bg-amber-500' :
+                      'bg-violet-500'
+                    }`} />
                     {feature}
                   </div>
                 ))}
@@ -131,7 +136,7 @@ const HomePrograms = () => {
 
               {/* CTA */}
               <div className="pt-6 mt-6 border-t border-border/40">
-                <a href="/auth/login" className={`text-sm font-bold uppercase italic tracking-tighter text-${program.color === 'indigo' ? 'indigo' : program.color === 'emerald' ? 'emerald' : program.color === 'amber' ? 'amber' : 'violet'}-600 hover:underline`}>
+                <a href="/auth/login" className="text-sm font-semibold tracking-tight text-indigo-600 hover:underline">
                   Enroll Now →
                 </a>
               </div>

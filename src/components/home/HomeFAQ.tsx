@@ -51,14 +51,14 @@ const HomeFAQ = () => {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-16 space-y-4"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 rounded-full text-indigo-600 text-xs font-bold uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 rounded-full text-indigo-600 text-xs font-semibold tracking-wider">
             <HelpCircle className="h-4 w-4" />
             FAQ
           </div>
-          <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter uppercase leading-none">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight uppercase leading-none">
             GOT <span className="text-indigo-600">QUESTIONS</span>?
           </h2>
-          <p className="text-muted-foreground font-medium text-lg">
+          <p className="text-muted-foreground font-normal text-lg">
             Find answers to the most commonly asked questions about our programs and methodology.
           </p>
         </motion.div>
@@ -77,7 +77,7 @@ const HomeFAQ = () => {
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full px-8 py-6 flex items-center justify-between gap-4 text-left"
               >
-                <span className="font-bold italic uppercase tracking-tighter text-sm md:text-base">
+                <span className="font-semibold tracking-tight text-sm md:text-base">
                   {faq.question}
                 </span>
                 <motion.div
@@ -100,7 +100,7 @@ const HomeFAQ = () => {
                   >
                     <div className="px-8 pb-6 pt-0">
                       <div className="w-full h-px bg-border/40 mb-6" />
-                      <p className="text-muted-foreground font-medium leading-relaxed">
+                      <p className="text-muted-foreground font-normal leading-relaxed">
                         {faq.answer}
                       </p>
                     </div>

@@ -46,14 +46,14 @@ const HomeHowItWorks = () => {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-16 space-y-4"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-violet-500/10 rounded-full text-violet-600 text-xs font-bold uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-violet-500/10 rounded-full text-violet-600 text-xs font-semibold tracking-wider">
             <Target className="h-4 w-4" />
             How It Works
           </div>
-          <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter uppercase leading-none">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight uppercase leading-none">
             YOUR PATH TO <span className="text-indigo-600">EXCELLENCE</span>
           </h2>
-          <p className="text-muted-foreground font-medium text-lg">
+          <p className="text-muted-foreground font-normal text-lg">
             A systematic approach designed to maximize your learning potential and academic success.
           </p>
         </motion.div>
@@ -78,16 +78,16 @@ const HomeHowItWorks = () => {
                   <div className="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white shadow-xl shadow-indigo-500/30 relative z-10">
                     {step.icon}
                   </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-white font-black italic text-sm">
+                  <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold text-sm">
                     {step.number}
                   </div>
                 </div>
 
-                <h3 className="text-xl font-black italic uppercase tracking-tighter mb-3">
+                <h3 className="text-xl font-semibold tracking-tight mb-3">
                   {step.title}
                 </h3>
 
-                <p className="text-muted-foreground font-medium text-sm leading-relaxed mb-6 max-w-xs mx-auto">
+                <p className="text-muted-foreground font-normal text-sm leading-relaxed mb-6 max-w-xs mx-auto">
                   {step.description}
                 </p>
 
@@ -117,7 +117,7 @@ const HomeHowItWorks = () => {
         >
           <a
             href="/auth/login"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 rounded-2xl text-white font-bold uppercase italic tracking-tighter shadow-xl shadow-indigo-600/30 group transition-all"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 rounded-2xl text-white font-semibold tracking-tight shadow-xl shadow-indigo-600/30 group transition-all"
           >
             Start Your Journey
             <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />

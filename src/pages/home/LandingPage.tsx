@@ -51,20 +51,20 @@ const LandingPage = () => {
             backgroundSize: '40px 40px'
           }} />
           <div className="container mx-auto px-6 relative z-10 text-center text-white space-y-8">
-            <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter">
-              Ready to <span className="not-italic text-amber-400">Transform</span> Your Learning?
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tight uppercase">
+              Ready to <span className="text-amber-400">Transform</span> Your Learning?
             </h2>
-            <p className="text-xl font-medium text-white/80 max-w-2xl mx-auto">
+            <p className="text-xl font-normal text-white/80 max-w-2xl mx-auto">
               Join thousands of students who have already accelerated their academic and professional growth with our advanced methodology. Your journey to excellence starts here.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
               <a href="/auth/login">
-                <button className="px-10 py-5 bg-white text-indigo-600 rounded-2xl font-black italic uppercase tracking-tighter hover:bg-indigo-50 hover:scale-105 transition-all shadow-2xl">
+                <button className="px-10 py-5 bg-white text-indigo-600 rounded-2xl font-semibold tracking-tight hover:bg-indigo-50 hover:scale-105 transition-all shadow-2xl">
                   Start Free Trial
                 </button>
               </a>
               <a href="#programs">
-                <button className="px-10 py-5 bg-white/10 backdrop-blur-sm text-white rounded-2xl font-black italic uppercase tracking-tighter hover:bg-white/20 transition-all border border-white/20">
+                <button className="px-10 py-5 bg-white/10 backdrop-blur-sm text-white rounded-2xl font-semibold tracking-tight hover:bg-white/20 transition-all border border-white/20">
                   Explore Programs
                 </button>
               </a>
