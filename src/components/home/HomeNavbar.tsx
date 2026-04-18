@@ -32,7 +32,7 @@ const HomeNavbar = () => {
     { name: "Programs", href: "#programs" },
     { name: "Why EduVW", href: "#why-eduvw" },
     { name: "Pricing", href: "#pricing" },
-    { name: "Success Stories", href: "#success" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (

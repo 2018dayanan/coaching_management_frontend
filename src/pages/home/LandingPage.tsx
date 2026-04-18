@@ -9,6 +9,7 @@ import HomeTeam from "@/components/home/HomeTeam";
 import HomeTestimonials from "@/components/home/HomeTestimonials";
 import HomePricing from "@/components/home/HomePricing";
 import HomeFAQ from "@/components/home/HomeFAQ";
+import HomeContact from "@/components/home/HomeContact";
 import HomeFooter from "@/components/home/HomeFooter";
 
 const LandingPage = () => {
@@ -48,6 +49,9 @@ const LandingPage = () => {
         {/* FAQ Section */}
         <HomeFAQ />
 
+        {/* Contact Section */}
+        <HomeContact />
+
         {/* Final CTA Section */}
         <section className="py-24 bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-800 relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
@@ -71,9 +75,9 @@ const LandingPage = () => {
                   Start Free Trial
                 </button>
               </a>
-              <a href="#pricing">
+              <a href="#contact">
                 <button className="px-10 py-5 bg-white/10 backdrop-blur-sm text-white rounded-2xl font-semibold tracking-tight hover:bg-white/20 transition-all border border-white/20">
-                  View Pricing
+                  Contact Us
                 </button>
               </a>
             </div>
