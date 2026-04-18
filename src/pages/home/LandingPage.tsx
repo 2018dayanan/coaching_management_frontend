@@ -5,8 +5,9 @@ import HomeStats from "@/components/home/HomeStats";
 import HomeFeatures from "@/components/home/HomeFeatures";
 import HomeWhyEduVW from "@/components/home/HomeWhyEduVW";
 import HomeHowItWorks from "@/components/home/HomeHowItWorks";
+import HomePartners from "@/components/home/HomePartners";
 import HomeTeam from "@/components/home/HomeTeam";
-import HomeTestimonials from "@/components/home/HomeTestimonials";
+import HomeCaseStudies from "@/components/home/HomeCaseStudies";
 import HomePricing from "@/components/home/HomePricing";
 import HomeFAQ from "@/components/home/HomeFAQ";
 import HomeContact from "@/components/home/HomeContact";
@@ -37,11 +38,14 @@ const LandingPage = () => {
         {/* How It Works Section */}
         <HomeHowItWorks />
 
+        {/* Partners Section */}
+        <HomePartners />
+
         {/* Team Section */}
         <HomeTeam />
 
-        {/* Testimonials Section */}
-        <HomeTestimonials />
+        {/* Case Studies Section */}
+        <HomeCaseStudies />
 
         {/* Pricing Section */}
         <HomePricing />
