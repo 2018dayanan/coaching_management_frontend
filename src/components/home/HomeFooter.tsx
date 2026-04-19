@@ -22,7 +22,7 @@ const HomeFooter = () => {
                 <GraduationCap className="h-6 w-6 text-white" />
               </div>
               <span className="text-xl font-bold tracking-tight">
-                EDU<span className="text-indigo-600">GATE</span>
+                Edu<span className="text-indigo-600">VW</span>
               </span>
             </Link>
             <p className="text-muted-foreground font-normal text-sm leading-relaxed max-w-xs">
