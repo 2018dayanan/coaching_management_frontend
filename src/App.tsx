@@ -27,6 +27,7 @@ import TaskManagement from "./pages/teacher/tasks/TaskManagement";
 import TeacherBatchList from "./pages/teacher/batches/BatchList";
 import TeacherClassList from "./pages/teacher/classes/ClassList";
 import LandingPage from "./pages/home/LandingPage";
+import DemoPage from "./pages/home/Demo";
 import StudentLogin from "./pages/auth/StudentLogin";
 import StudentDashboard from "./pages/student/Dashboard";
 import StudentProfilePage from "./pages/student/Profile";
@@ -52,6 +53,7 @@ const App = () => (
             <Route path="/teacher/auth/login" element={<TeacherLogin />} />
             <Route path="/auth/student/login" element={<StudentLogin />} />
             <Route path="/" element={<LandingPage />} />
+            <Route path="/demo" element={<DemoPage />} />
             <Route element={<ProtectedRoute allowedRoles={["ADMIN", "SUPER_ADMIN"]} />}>
               <Route
                 path="/admin"

@@ -59,7 +59,7 @@ const HomeHero = () => {
                 <div className="p-2 bg-indigo-600 rounded-full text-white shadow-lg">
                   <Play className="h-4 w-4 fill-current" />
                 </div>
-                Watch Method
+                Watch Demo
               </Button>
             </motion.div>
 
@@ -95,11 +95,11 @@ const HomeHero = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 via-violet-600 to-indigo-800 opacity-20" />
               <div className="relative h-full w-full rounded-[2rem] bg-background/50 backdrop-blur-sm border border-white/10 overflow-hidden flex items-center justify-center p-12 text-center">
-                 <div className="space-y-4">
-                    <GraduationCap className="h-20 w-20 text-indigo-600 mx-auto mb-6 opacity-80" />
-                    <div className="text-2xl font-bold tracking-tight leading-none">The Future of <br/> <span className="text-indigo-600">Learning</span> is Here</div>
-                    <div className="text-sm font-normal text-muted-foreground opacity-70">Experience the synergy of technology and education.</div>
-                 </div>
+                <div className="space-y-4">
+                  <GraduationCap className="h-20 w-20 text-indigo-600 mx-auto mb-6 opacity-80" />
+                  <div className="text-2xl font-bold tracking-tight leading-none">The Future of <br /> <span className="text-indigo-600">Learning</span> is Here</div>
+                  <div className="text-sm font-normal text-muted-foreground opacity-70">Experience the synergy of technology and education.</div>
+                </div>
               </div>
 
               {/* Floating Cards (Decorative) */}

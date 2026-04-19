@@ -67,6 +67,12 @@ const HomeNavbar = () => {
               {link.name}
             </a>
           ))}
+          <Link
+            to="/demo"
+            className="text-sm font-semibold tracking-wide text-muted-foreground hover:text-indigo-600 transition-colors"
+          >
+            Demo
+          </Link>
         </div>
 
         {/* Actions */}
@@ -241,6 +247,14 @@ const HomeNavbar = () => {
                   {link.name}
                 </a>
               ))}
+              <Link
+                to="/demo"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-lg font-semibold tracking-tight"
+              >
+                Demo
+              </Link>
+
               <div className="flex flex-col gap-3 pt-4 border-t">
                 <Link
                   to="/auth/login"
