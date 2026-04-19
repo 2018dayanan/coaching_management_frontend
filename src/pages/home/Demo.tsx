@@ -5,10 +5,18 @@ import {
   Users,
   GraduationCap,
   ArrowRight,
+  Layers,
+  BarChart,
+  Calendar,
+  BookOpen,
+  ClipboardList,
+  UserCheck,
+  Bell,
+  Shield,
+  GraduationCap as GradIcon,
 } from "lucide-react";
 import HomeNavbar from "@/components/home/HomeNavbar";
 import HomeFooter from "@/components/home/HomeFooter";
-import HorizontalMenu, { demoMenuItems } from "@/components/ui/Menu";
 
 const PortalCard = ({
   title,
@@ -160,15 +168,8 @@ const DemoPage = () => {
     <div className="min-h-screen bg-background">
       <HomeNavbar />
 
-      {/* Menu Bar */}
-      <div className="sticky top-[72px] z-50 bg-background/80 backdrop-blur-xl border-b border-border/40">
-        <div className="container mx-auto px-6 py-3">
-          <HorizontalMenu items={demoMenuItems} />
-        </div>
-      </div>
-
       {/* Hero Section */}
-      <section className="pt-8 pb-16 px-6">
+      <section className="pt-32 pb-16 px-6">
         <div className="container mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
