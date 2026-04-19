@@ -5,6 +5,16 @@ import { Menu, X, GraduationCap, ArrowRight, Sun, Moon, Monitor } from "lucide-r
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/components/theme-provider";
+import HorizontalMenu from "@/components/ui/Menu";
+
+const navMenuItems = [
+  { label: "Programs", href: "#programs" },
+  { label: "Why EduVW", href: "#why-eduvw" },
+  { label: "Partners", href: "#partners" },
+  { label: "Pricing", href: "#pricing" },
+  { label: "Contact", href: "#contact" },
+  { label: "Demo", href: "/demo" },
+];
 
 const HomeNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,14 +38,6 @@ const HomeNavbar = () => {
     }
   }, [theme]);
 
-  const navLinks = [
-    { name: "Programs", href: "#programs" },
-    { name: "Why EduVW", href: "#why-eduvw" },
-    { name: "Partners", href: "#partners" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "Contact", href: "#contact" },
-  ];
-
   return (
     <nav
       className={cn(
@@ -57,22 +59,8 @@ const HomeNavbar = () => {
         </Link>
 
         {/* Desktop Links */}
-        <div className="hidden lg:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-sm font-semibold tracking-wide text-muted-foreground hover:text-indigo-600 transition-colors"
-            >
-              {link.name}
-            </a>
-          ))}
-          <Link
-            to="/demo"
-            className="text-sm font-semibold tracking-wide text-muted-foreground hover:text-indigo-600 transition-colors"
-          >
-            Demo
-          </Link>
+        <div className="hidden lg:flex items-center gap-6">
+          <HorizontalMenu items={navMenuItems} />
         </div>
 
         {/* Actions */}
@@ -236,25 +224,17 @@ const HomeNavbar = () => {
             exit={{ opacity: 0, height: 0 }}
             className="lg:hidden bg-background border-b border-border/40 overflow-hidden"
           >
-            <div className="flex flex-col p-6 gap-6">
-              {navLinks.map((link) => (
+            <div className="flex flex-col p-6 gap-4">
+              {navMenuItems.map((item) => (
                 <a
-                  key={link.name}
-                  href={link.href}
+                  key={item.href}
+                  href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-lg font-semibold tracking-tight"
+                  className="text-lg font-semibold tracking-tight py-2"
                 >
-                  {link.name}
+                  {item.label}
                 </a>
               ))}
-              <Link
-                to="/demo"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-semibold tracking-tight"
-              >
-                Demo
-              </Link>
-
               <div className="flex flex-col gap-3 pt-4 border-t">
                 <Link
                   to="/auth/login"
