@@ -101,7 +101,7 @@ const StudentTaskDetailPage = () => {
         <Button 
           variant="ghost" 
           onClick={() => navigate(-1)}
-          className="rounded-xl px-4 font-bold uppercase italic tracking-tighter text-muted-foreground hover:text-emerald-500 transition-colors"
+          className="rounded-xl px-4 font-bold uppercase tracking-tighter text-muted-foreground hover:text-emerald-500 transition-colors"
         >
           <ArrowLeft className="h-5 w-5 mr-3" />
           Return to Deck
@@ -129,7 +129,7 @@ const StudentTaskDetailPage = () => {
                       Assigned {new Date(task.assigned_date).toLocaleDateString()}
                    </div>
                 </div>
-                <CardTitle className="text-4xl font-black italic uppercase tracking-tight text-foreground mb-4">
+                <CardTitle className="text-4xl font-black uppercase tracking-tight text-foreground mb-4">
                    {task.title}
                 </CardTitle>
                 <div className="flex items-center gap-6">
@@ -147,7 +147,7 @@ const StudentTaskDetailPage = () => {
                    </div>
                 </div>
              </CardHeader>
-             <CardContent className="p-10 text-muted-foreground font-medium leading-relaxed italic text-lg whitespace-pre-wrap">
+             <CardContent className="p-10 text-muted-foreground font-medium leading-relaxed text-lg whitespace-pre-wrap">
                 {task.description}
                 
                 {task.attachment_url && (
@@ -176,7 +176,7 @@ const StudentTaskDetailPage = () => {
                    <CheckCircle2 className="h-32 w-32 rotate-12" />
                 </div>
                 <CardHeader className="p-10 pb-6">
-                   <CardTitle className="text-2xl font-black italic uppercase tracking-tight text-emerald-600 flex items-center gap-4">
+                   <CardTitle className="text-2xl font-black uppercase tracking-tight text-emerald-600 flex items-center gap-4">
                       <Award className="h-6 w-6" />
                       Instructor <span className="text-foreground">Feedback</span>
                    </CardTitle>
@@ -185,11 +185,11 @@ const StudentTaskDetailPage = () => {
                    <div className="flex items-center gap-8">
                       <div className="p-6 bg-white rounded-[2rem] shadow-xl text-center min-w-[120px]">
                          <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">Grade</div>
-                         <div className="text-4xl font-black italic text-emerald-600">{submission?.marks || '--'}</div>
+                         <div className="text-4xl font-black text-emerald-600">{submission?.marks || '--'}</div>
                       </div>
                       <div className="flex-1">
                          <div className="text-[10px] font-black uppercase tracking-widest text-emerald-600/60 mb-2">Remarks</div>
-                         <p className="font-bold italic text-foreground/80 leading-relaxed capitalize">
+                         <p className="font-bold text-foreground/80 leading-relaxed capitalize">
                             "{submission?.remark || 'Exceptional performance. The logic is clean and implementation follows all best practices.'}"
                          </p>
                       </div>
@@ -205,7 +205,7 @@ const StudentTaskDetailPage = () => {
              ${isReviewed ? 'opacity-70 pointer-events-none grayscale-[0.3]' : ''}
            `}>
               <CardHeader className="border-b border-border/40 bg-muted/20 py-8 px-8">
-                 <CardTitle className="text-xl font-bold italic uppercase tracking-tight">
+                 <CardTitle className="text-xl font-bold uppercase tracking-tight">
                     {submission ? 'Re-submit' : 'Submit'} <span className="text-emerald-500">Your Work</span>
                  </CardTitle>
               </CardHeader>
@@ -249,7 +249,7 @@ const StudentTaskDetailPage = () => {
                     <Button 
                       type="submit" 
                       disabled={isSubmitting || isReviewed}
-                      className="w-full h-14 bg-emerald-600 hover:bg-emerald-700 rounded-2xl font-black uppercase italic tracking-widest shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-3 active:scale-95 transition-all"
+                      className="w-full h-14 bg-emerald-600 hover:bg-emerald-700 rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-3 active:scale-95 transition-all"
                     >
                        {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
                        {submission ? 'Update Deployment' : 'Deploy Submission'}
@@ -259,7 +259,7 @@ const StudentTaskDetailPage = () => {
            </Card>
 
            {isReviewed && (
-              <div className="p-6 bg-amber-500/10 border border-amber-500/20 rounded-[2rem] flex items-start gap-4 italic font-medium text-amber-700 text-sm">
+              <div className="p-6 bg-amber-500/10 border border-amber-500/20 rounded-[2rem] flex items-start gap-4 font-medium text-amber-700 text-sm">
                  <AlertTriangle className="h-5 w-5 shrink-0" />
                  This task has been reviewed. Modifications to the submission are now locked.
               </div>

@@ -63,8 +63,8 @@ const StudentNotificationsPage = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h2 className="text-4xl font-black tracking-tight text-foreground italic uppercase flex items-center gap-4">
-            NOTIFICATIONS <span className="text-emerald-500 not-italic">HUB</span>
+          <h2 className="text-4xl font-black tracking-tight text-foreground uppercase flex items-center gap-4">
+            NOTIFICATIONS <span className="text-emerald-500">HUB</span>
             {unreadCount > 0 && (
                <Badge className="bg-emerald-500 text-white font-black text-xs px-3 py-1 animate-pulse border-none">
                  {unreadCount} NEW
@@ -77,7 +77,7 @@ const StudentNotificationsPage = () => {
           <Button 
             onClick={() => markAllReadMutation.mutate()}
             disabled={markAllReadMutation.isPending}
-            className="bg-emerald-600/10 text-emerald-600 hover:bg-emerald-600 hover:text-white rounded-xl px-8 font-black uppercase italic tracking-tighter transition-all shadow-lg active:scale-95"
+            className="bg-emerald-600/10 text-emerald-600 hover:bg-emerald-600 hover:text-white rounded-xl px-8 font-black uppercase tracking-tighter transition-all shadow-lg active:scale-95"
           >
             Mark All as Read
           </Button>
@@ -100,7 +100,7 @@ const StudentNotificationsPage = () => {
 
                 <div className="flex-1 min-w-0 space-y-1">
                    <div className="flex items-center justify-between gap-4">
-                      <h3 className={`text-lg font-black italic uppercase tracking-tight truncate ${!notification.is_read ? 'text-foreground' : 'text-muted-foreground'}`}>
+                      <h3 className={`text-lg font-black uppercase tracking-tight truncate ${!notification.is_read ? 'text-foreground' : 'text-muted-foreground'}`}>
                         {notification.title}
                       </h3>
                       <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60 flex items-center gap-2 shrink-0">
@@ -128,7 +128,7 @@ const StudentNotificationsPage = () => {
         {notifications?.length === 0 && (
            <div className="flex flex-col items-center justify-center py-32 text-center bg-card/20 rounded-[3rem] border border-dashed border-border/60">
               <Shield className="h-16 w-16 text-muted-foreground/20 mb-6" />
-              <h4 className="text-xl font-black italic uppercase tracking-wider text-muted-foreground/40">Zero Interference</h4>
+              <h4 className="text-xl font-black uppercase tracking-wider text-muted-foreground/40">Zero Interference</h4>
               <p className="text-muted-foreground text-sm font-medium mt-2">All systems are nominal. No new notifications in your feed.</p>
            </div>
         )}

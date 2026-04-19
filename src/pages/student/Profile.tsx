@@ -68,15 +68,15 @@ const StudentProfilePage = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h2 className="text-4xl font-black tracking-tight text-foreground italic uppercase">
-            MY <span className="text-emerald-500 not-italic">PROFILE</span>
+          <h2 className="text-4xl font-black tracking-tight text-foreground uppercase">
+            MY <span className="text-emerald-500">PROFILE</span>
           </h2>
           <p className="text-muted-foreground font-medium">Manage your identity and contact details</p>
         </div>
         <Button
           onClick={() => setIsEditing(!isEditing)}
           variant={isEditing ? "outline" : "default"}
-          className={isEditing ? "rounded-xl" : "bg-emerald-600 hover:bg-emerald-700 rounded-xl px-8 font-bold uppercase italic tracking-tighter shadow-lg shadow-emerald-500/20"}
+          className={isEditing ? "rounded-xl" : "bg-emerald-600 hover:bg-emerald-700 rounded-xl px-8 font-bold uppercase tracking-tighter shadow-lg shadow-emerald-500/20"}
         >
           {isEditing ? "Cancel Edit" : "Edit Profile"}
         </Button>
@@ -104,7 +104,7 @@ const StudentProfilePage = () => {
               )}
             </div>
 
-            <h3 className="text-2xl font-black mt-6 tracking-tight uppercase italic truncate w-full px-4">{profile.name}</h3>
+            <h3 className="text-2xl font-black mt-6 tracking-tight uppercase truncate w-full px-4">{profile.name}</h3>
             <p className="text-sm font-bold text-muted-foreground tracking-widest uppercase opacity-60">@{profile.unique_id}</p>
             
             <Badge className="mt-4 font-black text-[10px] uppercase tracking-[0.2em] px-4 py-1.5 bg-emerald-500/10 text-emerald-600 border-emerald-500/20 shadow-none">
@@ -127,7 +127,7 @@ const StudentProfilePage = () => {
         {/* Details Section */}
         <Card className="lg:col-span-2 border-border/40 rounded-[2.5rem] bg-card/40 backdrop-blur-md overflow-hidden shadow-2xl shadow-black/5">
            <CardHeader className="border-b border-border/40 bg-muted/20 pb-6 pt-8 px-10">
-              <CardTitle className="text-xl font-bold italic uppercase tracking-tight flex items-center gap-3">
+              <CardTitle className="text-xl font-bold uppercase tracking-tight flex items-center gap-3">
                  <User className="h-5 w-5 text-emerald-500" />
                  Account <span className="text-emerald-500">Details</span>
               </CardTitle>
@@ -187,7 +187,7 @@ const StudentProfilePage = () => {
                     <Button 
                       type="submit" 
                       disabled={updateMutation.isPending}
-                      className="bg-emerald-600 hover:bg-emerald-700 rounded-xl px-10 h-14 font-black uppercase italic tracking-tighter shadow-xl shadow-emerald-500/30 flex items-center gap-2"
+                      className="bg-emerald-600 hover:bg-emerald-700 rounded-xl px-10 h-14 font-black uppercase tracking-tighter shadow-xl shadow-emerald-500/30 flex items-center gap-2"
                     >
                        {updateMutation.isPending ? <Loader2 className="h-5 w-5 animate-spin" /> : <CheckCircle2 className="h-5 w-5" />}
                        Save Transformations

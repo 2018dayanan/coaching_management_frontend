@@ -90,21 +90,21 @@ const StudentAcademicPage = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h2 className="text-4xl font-black tracking-tight text-foreground italic uppercase">
-            ACADEMIC <span className="text-emerald-500 not-italic">HISTORY</span>
+          <h2 className="text-4xl font-black tracking-tight text-foreground uppercase">
+            ACADEMIC <span className="text-emerald-500">HISTORY</span>
           </h2>
           <p className="text-muted-foreground font-medium">Document your previous qualifications and degrees</p>
         </div>
         <Dialog open={isModalOpen} onOpenChange={(open) => { setIsModalOpen(open); if (!open) setEditingDetail(null); }}>
           <DialogTrigger asChild>
-            <Button className="bg-emerald-600 hover:bg-emerald-700 rounded-xl px-8 font-bold uppercase italic tracking-tighter shadow-lg shadow-emerald-500/20 flex items-center gap-2">
+            <Button className="bg-emerald-600 hover:bg-emerald-700 rounded-xl px-8 font-bold uppercase tracking-tighter shadow-lg shadow-emerald-500/20 flex items-center gap-2">
               <Plus className="h-5 w-5" />
               Add Record
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl bg-card/95 backdrop-blur-xl border-border/40 rounded-[2.5rem]">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-black italic uppercase tracking-tight">
+              <DialogTitle className="text-2xl font-black uppercase tracking-tight">
                 {editingDetail ? "Update" : "Add New"} <span className="text-emerald-500">Academic Entry</span>
               </DialogTitle>
             </DialogHeader>
@@ -149,7 +149,7 @@ const StudentAcademicPage = () => {
                <Button 
                  type="submit" 
                  disabled={mutation.isPending}
-                 className="w-full bg-emerald-600 hover:bg-emerald-700 h-14 rounded-2xl font-black uppercase italic tracking-widest shadow-xl shadow-emerald-500/20"
+                 className="w-full bg-emerald-600 hover:bg-emerald-700 h-14 rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-emerald-500/20"
                >
                  {mutation.isPending ? <Loader2 className="h-5 w-5 animate-spin" /> : "Save Qualification"}
                </Button>
@@ -169,7 +169,7 @@ const StudentAcademicPage = () => {
                    </div>
                    <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-3 mb-1 flex-wrap">
-                        <h3 className="text-2xl font-black italic uppercase tracking-tight">{detail.degreeName}</h3>
+                        <h3 className="text-2xl font-black uppercase tracking-tight">{detail.degreeName}</h3>
                         <Badge className="bg-emerald-500/10 text-emerald-600 border-none font-black text-[9px] uppercase tracking-widest px-3">
                           {detail.educationLevel}
                         </Badge>
@@ -209,7 +209,7 @@ const StudentAcademicPage = () => {
         {academicHistory?.length === 0 && (
            <div className="flex flex-col items-center justify-center py-32 text-center bg-card/20 rounded-[3rem] border border-dashed border-border/60">
               <School className="h-16 w-16 text-muted-foreground/20 mb-6" />
-              <h4 className="text-xl font-black italic uppercase tracking-wider text-muted-foreground/40">No records documented yet</h4>
+              <h4 className="text-xl font-black uppercase tracking-wider text-muted-foreground/40">No records documented yet</h4>
               <p className="text-muted-foreground text-sm font-medium mt-2">Document your educational journey to complete your profile.</p>
            </div>
         )}

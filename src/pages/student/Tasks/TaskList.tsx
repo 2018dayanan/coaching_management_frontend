@@ -39,8 +39,8 @@ const StudentTaskListPage = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h2 className="text-4xl font-black tracking-tight text-foreground italic uppercase flex items-center gap-4">
-            TASKS & <span className="text-emerald-500 not-italic">ASSIGNMENTS</span>
+          <h2 className="text-4xl font-black tracking-tight text-foreground uppercase flex items-center gap-4">
+            TASKS & <span className="text-emerald-500">ASSIGNMENTS</span>
           </h2>
           <p className="text-muted-foreground font-medium">Manage your workload and submit your academic contributions</p>
         </div>
@@ -66,13 +66,13 @@ const StudentTaskListPage = () => {
                       {task.batch_id?.name}
                     </Badge>
                  </div>
-                 <CardTitle className="text-2xl font-black tracking-tight italic uppercase group-hover:text-emerald-500 transition-colors line-clamp-2">
+                 <CardTitle className="text-2xl font-black tracking-tight uppercase group-hover:text-emerald-500 transition-colors line-clamp-2">
                     {task.title}
                  </CardTitle>
               </CardHeader>
 
               <CardContent className="space-y-6 pt-2 pb-8 px-8 flex-1 flex flex-col">
-                <p className="text-sm text-muted-foreground font-medium line-clamp-3 italic opacity-80 mb-6">
+                <p className="text-sm text-muted-foreground font-medium line-clamp-3 opacity-80 mb-6">
                   {task.description}
                 </p>
 
@@ -104,7 +104,7 @@ const StudentTaskListPage = () => {
         {tasks?.length === 0 && (
            <div className="col-span-full flex flex-col items-center justify-center py-32 text-center bg-card/20 rounded-[3rem] border border-dashed border-border/60">
               <ClipboardList className="h-16 w-16 text-muted-foreground/20 mb-6" />
-              <h4 className="text-xl font-black italic uppercase tracking-wider text-muted-foreground/40">No Tasks Assigned</h4>
+              <h4 className="text-xl font-black uppercase tracking-wider text-muted-foreground/40">No Tasks Assigned</h4>
               <p className="text-muted-foreground text-sm font-medium mt-2">Check back later for new academic assignments from your teachers.</p>
            </div>
         )}

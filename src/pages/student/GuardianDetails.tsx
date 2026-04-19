@@ -81,21 +81,21 @@ const StudentGuardianPage = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h2 className="text-4xl font-black tracking-tight text-foreground italic uppercase">
-            GUARDIAN <span className="text-emerald-500 not-italic">DETAILS</span>
+          <h2 className="text-4xl font-black tracking-tight text-foreground uppercase">
+            GUARDIAN <span className="text-emerald-500">DETAILS</span>
           </h2>
           <p className="text-muted-foreground font-medium">Manage your emergency contacts and primary guardians</p>
         </div>
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-emerald-600 hover:bg-emerald-700 rounded-xl px-8 font-bold uppercase italic tracking-tighter shadow-lg shadow-emerald-500/20 flex items-center gap-2">
+            <Button className="bg-emerald-600 hover:bg-emerald-700 rounded-xl px-8 font-bold uppercase tracking-tighter shadow-lg shadow-emerald-500/20 flex items-center gap-2">
               <Plus className="h-5 w-5" />
               Add Guardian
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-md bg-card/95 backdrop-blur-xl border-border/40 rounded-[2.5rem]">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-black italic uppercase tracking-tight">
+              <DialogTitle className="text-2xl font-black uppercase tracking-tight">
                  New <span className="text-emerald-500">Guardian Record</span>
               </DialogTitle>
             </DialogHeader>
@@ -124,7 +124,7 @@ const StudentGuardianPage = () => {
                <Button 
                 type="submit" 
                 disabled={mutation.isPending}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 h-14 rounded-2xl font-black uppercase italic tracking-widest shadow-xl shadow-emerald-500/20"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 h-14 rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-emerald-500/20"
                >
                  {mutation.isPending ? <Loader2 className="h-5 w-5 animate-spin" /> : "Secure Record"}
                </Button>
@@ -151,7 +151,7 @@ const StudentGuardianPage = () => {
                 </div>
 
                 <div className="space-y-1 mb-6">
-                   <h3 className="text-2xl font-black italic uppercase tracking-tight">{guardian.guardianName}</h3>
+                   <h3 className="text-2xl font-black uppercase tracking-tight">{guardian.guardianName}</h3>
                    <div className="flex items-center gap-2 text-muted-foreground font-bold text-xs uppercase tracking-widest opacity-60">
                       <Heart className="h-3 w-3 text-emerald-500" />
                       {guardian.guardianRelationship}
@@ -174,7 +174,7 @@ const StudentGuardianPage = () => {
         {guardians?.length === 0 && (
            <div className="col-span-full flex flex-col items-center justify-center py-32 text-center bg-card/20 rounded-[3rem] border border-dashed border-border/60">
               <User className="h-16 w-16 text-muted-foreground/20 mb-6" />
-              <h4 className="text-xl font-black italic uppercase tracking-wider text-muted-foreground/40">No guardians linked</h4>
+              <h4 className="text-xl font-black uppercase tracking-wider text-muted-foreground/40">No guardians linked</h4>
               <p className="text-muted-foreground text-sm font-medium mt-2">Add at least one primary contact for emergency security.</p>
            </div>
         )}

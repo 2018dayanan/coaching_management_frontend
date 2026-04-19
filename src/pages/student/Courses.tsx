@@ -39,8 +39,8 @@ const StudentCoursesPage = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h2 className="text-4xl font-black tracking-tight text-foreground italic uppercase">
-            MY <span className="text-emerald-500 not-italic">COURSES</span>
+          <h2 className="text-4xl font-black tracking-tight text-foreground uppercase">
+            MY <span className="text-emerald-500">COURSES</span>
           </h2>
           <p className="text-muted-foreground font-medium">Your active learning batches and curriculum</p>
         </div>
@@ -66,7 +66,7 @@ const StudentCoursesPage = () => {
               <Badge className="w-fit mb-4 font-black text-[10px] uppercase tracking-widest bg-emerald-500/10 text-emerald-600 border-emerald-500/20">
                 {course.status}
               </Badge>
-              <CardTitle className="text-2xl font-black tracking-tight italic uppercase group-hover:text-emerald-500 transition-colors">
+              <CardTitle className="text-2xl font-black tracking-tight uppercase group-hover:text-emerald-500 transition-colors">
                 {course.name}
               </CardTitle>
               <CardDescription className="font-bold text-muted-foreground/70 uppercase text-[10px] tracking-[0.2em]">
@@ -75,7 +75,7 @@ const StudentCoursesPage = () => {
             </CardHeader>
 
             <CardContent className="space-y-6 pt-2 pb-8 px-8">
-              <p className="text-sm text-muted-foreground font-medium line-clamp-2 italic">
+              <p className="text-sm text-muted-foreground font-medium line-clamp-2">
                 {course.description || "Master the core concepts and build advanced expertise in this specialized track."}
               </p>
 
@@ -93,7 +93,7 @@ const StudentCoursesPage = () => {
               </div>
 
               <div className="pt-4 mt-6 border-t border-border/40 group-last:border-none">
-                 <button className="w-full h-12 rounded-2xl bg-muted/30 hover:bg-emerald-600 hover:text-white transition-all duration-300 flex items-center justify-between px-6 font-black uppercase italic text-[11px] tracking-widest group/btn">
+                 <button className="w-full h-12 rounded-2xl bg-muted/30 hover:bg-emerald-600 hover:text-white transition-all duration-300 flex items-center justify-between px-6 font-black uppercase text-[11px] tracking-widest group/btn">
                     Course Resources
                     <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
                  </button>
@@ -107,7 +107,7 @@ const StudentCoursesPage = () => {
              <div className="p-6 bg-muted/30 rounded-[2.5rem] animate-pulse">
                 <BookOpen className="h-12 w-12 text-muted-foreground opacity-20" />
              </div>
-             <p className="text-muted-foreground font-black uppercase italic tracking-widest">No active enrollments found</p>
+             <p className="text-muted-foreground font-black uppercase tracking-widest">No active enrollments found</p>
           </div>
         )}
       </div>

@@ -18,8 +18,8 @@ const StudentDashboard = () => {
       {/* Welcome Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div className="space-y-1">
-          <h2 className="text-4xl font-black tracking-tight text-foreground italic uppercase">
-            WELCOME BACK, <span className="text-emerald-500 not-italic font-bold">{student?.name?.split(" ")[0] || "LEARNER"}</span>
+          <h2 className="text-4xl font-black tracking-tight text-foreground uppercase">
+            WELCOME BACK, <span className="text-emerald-500 font-bold">{student?.name?.split(" ")[0] || "LEARNER"}</span>
           </h2>
           <p className="text-muted-foreground font-medium flex items-center gap-2">
             <TrendingUp className="h-4 w-4 text-emerald-500" />
@@ -52,7 +52,7 @@ const StudentDashboard = () => {
                   {stat.title}
                 </CardDescription>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-4xl font-black tracking-tighter italic">
+                  <CardTitle className="text-4xl font-black tracking-tighter">
                     {stat.value}
                   </CardTitle>
                   <div className={`p-3 rounded-2xl ${stat.bg} ${stat.color} group-hover:scale-110 transition-transform`}>
@@ -70,7 +70,7 @@ const StudentDashboard = () => {
         {/* Weekly Schedule */}
         <Card className="lg:col-span-2 border-border/40 rounded-[2.5rem] bg-card/40 backdrop-blur-md overflow-hidden shadow-2xl shadow-black/5">
            <CardHeader className="border-b border-border/40 bg-muted/20 pb-6 pt-8">
-              <CardTitle className="text-xl font-bold flex items-center gap-2 italic uppercase tracking-tight">
+              <CardTitle className="text-xl font-bold flex items-center gap-2 uppercase tracking-tight">
                 <Calendar className="h-5 w-5 text-emerald-500" />
                 Live <span className="text-emerald-500">Sessions</span>
               </CardTitle>
@@ -92,7 +92,7 @@ const StudentDashboard = () => {
                         </div>
                       </div>
                     </div>
-                    <button className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black uppercase text-[10px] tracking-widest italic shadow-lg shadow-emerald-600/20 transition-all active:scale-95">
+                    <button className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black uppercase text-[10px] tracking-widest shadow-lg shadow-emerald-600/20 transition-all active:scale-95">
                       Join Room
                     </button>
                   </div>
@@ -104,13 +104,13 @@ const StudentDashboard = () => {
         {/* Recent Performance */}
         <Card className="border-border/40 rounded-[2.5rem] bg-card/40 backdrop-blur-md overflow-hidden shadow-2xl shadow-black/5">
            <CardHeader className="border-b border-border/40 bg-muted/20 pb-6 pt-8">
-              <CardTitle className="text-xl font-bold italic uppercase tracking-tight">
+              <CardTitle className="text-xl font-bold uppercase tracking-tight">
                 Academic <span className="text-emerald-500">Pulse</span>
               </CardTitle>
            </CardHeader>
            <CardContent className="p-8 flex flex-col items-center justify-center text-center">
               <div className="w-32 h-32 rounded-full border-8 border-emerald-500/20 border-t-emerald-500 flex items-center justify-center mb-6 relative">
-                 <div className="text-3xl font-black tracking-tighter italic">92%</div>
+                 <div className="text-3xl font-black tracking-tighter">92%</div>
                  <div className="absolute -bottom-2 px-3 py-1 bg-emerald-500 text-white text-[8px] font-black uppercase tracking-widest rounded-full">Optimal</div>
               </div>
               <p className="text-sm font-medium text-muted-foreground">Your attendance and task completion rate is currently above average.</p>
